@@ -13,7 +13,7 @@ INSERT INTO Instruction VALUES (5,'Mix ingredients in a bowl. Use a hand mixer t
 CREATE TABLE RecipeTime (
 PrepTime TIME(0),
 CookTime TIME(0),
-TotalTime TIME(0) NOT NULL,
+TotalTime TIME(0) UNIQUE NOT NULL,
 PRIMARY KEY (PrepTime, CookTime)
 );
 
@@ -29,7 +29,7 @@ SkillLevel CHAR(20),
 Name VARCHAR(100) NOT NULL,
 PrepTime TIME(0) NOT NULL,
 CookTime TIME(0) NOT NULL,
-InstructionID INTEGER NOT NULL,
+InstructionID INTEGER UNIQUE NOT NULL,
 FOREIGN KEY (PrepTime, CookTime) REFERENCES RecipeTime (PrepTime, CookTime)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE,
