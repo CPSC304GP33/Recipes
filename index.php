@@ -15,11 +15,14 @@
 
     <ul>
       <li>
-        <a href="create.php"><strong>Create New Recipe</strong></a>
+        <a href="create.php"><strong>Add New Recipe</strong></a>
       </li>
       <li>
         <a href="read.php"><strong>Filter Recipe</strong></a>
       </li>
     </ul>
+
+    <?php include "templates/footer.php"; ?>
+
   </body>
 </html>
