@@ -24,7 +24,7 @@ INSERT INTO RecipeTime VALUES ('03:00:00', '01:00:00', '04:00:00');
 INSERT INTO RecipeTime VALUES ('04:00:00', '00:30:00', '04:30:00');
 
 CREATE TABLE Recipe (
-ReID CHAR(20) PRIMARY KEY,
+ReID INTEGER AUTO_INCREMENT PRIMARY KEY,
 SkillLevel CHAR(20),
 Name VARCHAR(100) NOT NULL,
 PrepTime TIME(0) NOT NULL,
@@ -38,11 +38,11 @@ FOREIGN KEY (InstructionID) REFERENCES Instruction(InsID)
 	ON UPDATE NO ACTION
 );
 
-INSERT INTO Recipe VALUES ('R1', 'Easy', 'Tiramisu', '00:10:00', '00:50:00', 1);
-INSERT INTO Recipe VALUES ('R2', 'Easy', 'Chocolate Cookie', '00:20:00', '00:15:00', 2);
-INSERT INTO Recipe VALUES ('R3', 'Medium', 'White Chocolate Brownie', '00:03:00', '00:10:00', 3);
-INSERT INTO Recipe VALUES ('R4', 'Hard', 'Lasagna', '03:00:00', '01:00:00', 4);
-INSERT INTO Recipe VALUES ('R5', 'Hard', 'Macaron', '04:00:00', '00:30:00', 5);
+INSERT INTO Recipe VALUES (1, 'Easy', 'Tiramisu', '00:10:00', '00:50:00', 1);
+INSERT INTO Recipe VALUES (2, 'Easy', 'Chocolate Cookie', '00:20:00', '00:15:00', 2);
+INSERT INTO Recipe VALUES (3, 'Medium', 'White Chocolate Brownie', '00:03:00', '00:10:00', 3);
+INSERT INTO Recipe VALUES (4, 'Hard', 'Lasagna', '03:00:00', '01:00:00', 4);
+INSERT INTO Recipe VALUES (5, 'Hard', 'Macaron', '04:00:00', '00:30:00', 5);
 
 
 CREATE TABLE Ingredient (
@@ -69,36 +69,40 @@ INSERT INTO Equipment VALUES ('Microwave');
 
 CREATE TABLE RecipeContainsIngredient (
 IName VARCHAR(100),
-ReID CHAR(20),
+ReID INTEGER,
 Amount CHAR(20) NOT NULL,
 PRIMARY KEY (IName, ReID),
 FOREIGN KEY (IName) REFERENCES Ingredient(Name)
-	ON DELETE NO ACTION,
+	ON DELETE NO ACTION
+	ON UPDATE CASCADE,
 FOREIGN KEY (ReID) REFERENCES Recipe(ReID)
 	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
-INSERT INTO RecipeContainsIngredient VALUES ('Flour', 'R1', '2');
-INSERT INTO RecipeContainsIngredient VALUES ('Cocoa Powder', 'R1', '1/2');
-INSERT INTO RecipeContainsIngredient VALUES ('Egg', 'R1', '4');
-INSERT INTO RecipeContainsIngredient VALUES ('Ground Beef', 'R4', '1/2');
-INSERT INTO RecipeContainsIngredient VALUES ('Tomato Paste', 'R4', '2');
+INSERT INTO RecipeContainsIngredient VALUES ('Flour', 1, '2');
+INSERT INTO RecipeContainsIngredient VALUES ('Cocoa Powder', 1, '1/2');
+INSERT INTO RecipeContainsIngredient VALUES ('Egg', 1, '4');
+INSERT INTO RecipeContainsIngredient VALUES ('Ground Beef', 4, '1/2');
+INSERT INTO RecipeContainsIngredient VALUES ('Tomato Paste', 4, '2');
 
 
 CREATE TABLE RecipeUsesEquipment(
 	EName VARCHAR(50),
-	ReID  CHAR(20),
+	ReID  INTEGER,
 	PRIMARY KEY (EName, ReID),
 	FOREIGN KEY (EName) REFERENCES Equipment(Name)
-		ON DELETE NO ACTION,
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE,
 	FOREIGN KEY (ReID) REFERENCES Recipe(ReID)
-		ON DELETE CASCADE);
+		ON DELETE CASCADE
+		ON UPDATE CASCADE);
 
-INSERT INTO RecipeUsesEquipment VALUES ('Oven', 'R1');
-INSERT INTO RecipeUsesEquipment VALUES ('Oven', 'R2');
-INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 'R1');
-INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 'R5');
-INSERT INTO RecipeUsesEquipment VALUES ('Microwave', 'R3');
+INSERT INTO RecipeUsesEquipment VALUES ('Oven', 1);
+INSERT INTO RecipeUsesEquipment VALUES ('Oven', 2);
+INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 1);
+INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 5);
+INSERT INTO RecipeUsesEquipment VALUES ('Microwave', 3);
 
 CREATE TABLE Tag (
 	TName VARCHAR(40) PRIMARY KEY
@@ -113,18 +117,20 @@ INSERT INTO Tag VALUES('Sweet');
 
 CREATE TABLE RecipeLabelledTag (
 TName VARCHAR(40),
-ReID CHAR(20),
+ReID INTEGER,
 PRIMARY KEY (TName, ReID),
 FOREIGN KEY (TName) REFERENCES Tag(TName)
-	ON DELETE CASCADE,
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
 FOREIGN KEY (ReID) REFERENCES Recipe(ReID)
-	ON DELETE CASCADE);
+	ON DELETE CASCADE
+	ON UPDATE CASCADE);
 
-INSERT INTO RecipeLabelledTag VALUES ('Sweet', 'R1');
-INSERT INTO RecipeLabelledTag VALUES ('Sweet', 'R2');
-INSERT INTO RecipeLabelledTag VALUES ('Sweet', 'R3');
-INSERT INTO RecipeLabelledTag VALUES ('Sweet', 'R5');
-INSERT INTO RecipeLabelledTag VALUES ('Low-fat', 'R4');
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 1);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 2);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 3);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 5);
+INSERT INTO RecipeLabelledTag VALUES ('Low-fat', 4);
 
 CREATE TABLE AveRating (
 	AverageScore REAL PRIMARY KEY,
@@ -143,6 +149,7 @@ AverageScore REAL,
 NumOfUsers INTEGER,
 FOREIGN KEY (AverageScore) REFERENCES AveRating(AverageScore)
 	ON DELETE NO ACTION
+	ON UPDATE CASCADE
 );
 
 INSERT INTO RatingResult VALUES (1, 3.5, 2);
@@ -168,23 +175,26 @@ INSERT INTO BookUser VALUES('User5', '567efg', 'user5@gmail.com', 'Apple allergy
 
 CREATE TABLE FinalRating (
     Username CHAR(20),
-    ReID CHAR(20),
+    ReID INTEGER,
     RID INTEGER NOT NULL,
     Score INTEGER NOT NULL,
     PRIMARY KEY (UserName, ReID),
     FOREIGN KEY (UserName) REFERENCES BookUser(UserName)
-    	ON DELETE CASCADE,
+    	ON DELETE CASCADE
+	ON UPDATE CASCADE,
     FOREIGN KEY (RID) REFERENCES RatingResult(RID)
-    	ON DELETE NO ACTION,
+    	ON DELETE NO ACTION
+	ON UPDATE CASCADE,
     FOREIGN KEY (ReID) REFERENCES Recipe(ReID)
 	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
-INSERT INTO FinalRating VALUES ('User1', 'R1', 1, 5);
-INSERT INTO FinalRating VALUES ('User2', 'R2', 2, 3);
-INSERT INTO FinalRating VALUES ('User3', 'R3', 3, 1);
-INSERT INTO FinalRating VALUES ('User4', 'R5', 5, 4);
-INSERT INTO FinalRating VALUES ('User5', 'R1', 1, 2);
+INSERT INTO FinalRating VALUES ('User1', 1, 1, 5);
+INSERT INTO FinalRating VALUES ('User2', 2, 2, 3);
+INSERT INTO FinalRating VALUES ('User3', 3, 3, 1);
+INSERT INTO FinalRating VALUES ('User4', 5, 5, 4);
+INSERT INTO FinalRating VALUES ('User5', 1, 1, 2);
 
 
 
@@ -199,20 +209,22 @@ INSERT INTO Cuisine VALUES ('Italian');
 INSERT INTO Cuisine VALUES ('French');
 
 CREATE TABLE RecipesInCuisine(
-	ReID CHAR(20),
+	ReID INTEGER,
 	CName CHAR(30),
 	PRIMARY KEY (ReID, CName),
 	FOREIGN KEY (ReID) REFERENCES Recipe(ReID)
-		ON DELETE CASCADE,
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	FOREIGN KEY (CName) REFERENCES Cuisine(Name)
 		ON DELETE NO ACTION
+		ON UPDATE CASCADE
 );
 
-INSERT INTO RecipesInCuisine VALUES ('R1', 'Western');
-INSERT INTO RecipesInCuisine VALUES ('R2', 'Western');
-INSERT INTO RecipesInCuisine VALUES ('R3', 'Western');
-INSERT INTO RecipesInCuisine VALUES ('R4', 'Western');
-INSERT INTO RecipesInCuisine VALUES ('R5', 'French');
+INSERT INTO RecipesInCuisine VALUES (1, 'Western');
+INSERT INTO RecipesInCuisine VALUES (2, 'Western');
+INSERT INTO RecipesInCuisine VALUES (3, 'Western');
+INSERT INTO RecipesInCuisine VALUES (4, 'Western');
+INSERT INTO RecipesInCuisine VALUES (5, 'French');
 
 CREATE TABLE ServingTimeOfDay(
 	Name CHAR(20) PRIMARY KEY
@@ -225,20 +237,22 @@ INSERT INTO ServingTimeOfDay VALUES ('Tea-time');
 INSERT INTO ServingTimeOfDay VALUES ('Brunch');
 
 CREATE TABLE RecipeHasServingTime(
-	ReID CHAR(20),
+	ReID INTEGER,
 	SName CHAR(20),
 	PRIMARY KEY(ReID, SName),
 	FOREIGN KEY(ReID) REFERENCES Recipe(ReID)
-		ON DELETE CASCADE,
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	FOREIGN KEY(SName) REFERENCES ServingTimeOfDay(Name)
 		ON DELETE NO ACTION
+		ON UPDATE CASCADE
 );
 
-INSERT INTO RecipeHasServingTime VALUES('R1', 'Breakfast');
-INSERT INTO RecipeHasServingTime VALUES('R2', 'Breakfast');
-INSERT INTO RecipeHasServingTime VALUES('R2', 'Brunch');
-INSERT INTO RecipeHasServingTime VALUES('R4', 'Dinner');
-INSERT INTO RecipeHasServingTime VALUES('R3', 'Tea-time');
+INSERT INTO RecipeHasServingTime VALUES(1, 'Breakfast');
+INSERT INTO RecipeHasServingTime VALUES(2, 'Breakfast');
+INSERT INTO RecipeHasServingTime VALUES(2, 'Brunch');
+INSERT INTO RecipeHasServingTime VALUES(4, 'Dinner');
+INSERT INTO RecipeHasServingTime VALUES(3, 'Tea-time');
 
 
 CREATE TABLE BookKeeper (
@@ -258,9 +272,11 @@ CREATE TABLE ResetUserPassword(
 	BUUsername CHAR(20),
 	PRIMARY KEY(BKUsername, BUUsername),
 	FOREIGN KEY (BKUsername) REFERENCES BookKeeper(Username)
-		ON DELETE CASCADE,
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	FOREIGN KEY (BUUsername) REFERENCES BookUser(Username)
 		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 INSERT INTO ResetUserPassword VALUES('Keeper1', 'User5');
@@ -274,9 +290,11 @@ CREATE TABLE SendNotifTo(
 	BUUsername CHAR(20),
 	PRIMARY KEY(BKUsername, BUUsername),
 	FOREIGN KEY (BKUsername) REFERENCES BookKeeper(Username)
-		ON DELETE CASCADE,
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	FOREIGN KEY (BUUsername) REFERENCES BookUser(Username)
 		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 INSERT INTO SendNotifTo VALUES('Keeper2', 'User1');
@@ -287,43 +305,48 @@ INSERT INTO SendNotifTo VALUES('Keeper3', 'User2');
 
 CREATE TABLE UserFavoritesRecipes(
 	Username CHAR(20),
-	ReID CHAR(20),
+	ReID INTEGER,
 	PRIMARY KEY(Username, ReID),
 	FOREIGN KEY(Username) REFERENCES BookUser(Username)
-		ON DELETE CASCADE,
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	FOREIGN KEY(ReID) REFERENCES Recipe(ReID) 
 		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
-INSERT INTO UserFavoritesRecipes VALUES('User1', 'R1');
-INSERT INTO UserFavoritesRecipes VALUES('User2', 'R1');
-INSERT INTO UserFavoritesRecipes VALUES('User1', 'R4');
-INSERT INTO UserFavoritesRecipes VALUES('User4', 'R1');
-INSERT INTO UserFavoritesRecipes VALUES('User2', 'R2');
+INSERT INTO UserFavoritesRecipes VALUES('User1', 1);
+INSERT INTO UserFavoritesRecipes VALUES('User2', 1);
+INSERT INTO UserFavoritesRecipes VALUES('User1', 4);
+INSERT INTO UserFavoritesRecipes VALUES('User4', 1);
+INSERT INTO UserFavoritesRecipes VALUES('User2', 2);
 
 CREATE TABLE UserSearchesRecipes(
 	Username CHAR(20),
-	ReID CHAR(20),
+	ReID INTEGER,
 	Keyword VARCHAR(100) NOT NULL,
 	PRIMARY KEY(Username, ReID),
 	FOREIGN KEY(Username) REFERENCES BookUser(Username)
-		ON DELETE CASCADE,
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	FOREIGN KEY(ReID) REFERENCES Recipe(ReID)
 		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
-INSERT INTO UserSearchesRecipes VALUES('User5', 'R1', 'cake');
-INSERT INTO UserSearchesRecipes VALUES('User5', 'R2', 'cookie');
-INSERT INTO UserSearchesRecipes VALUES('User3', 'R3', 'brownie');
-INSERT INTO UserSearchesRecipes VALUES('User4', 'R1', 'cake');
-INSERT INTO UserSearchesRecipes VALUES('User1', 'R1', 'cake');
+INSERT INTO UserSearchesRecipes VALUES('User5', 1, 'cake');
+INSERT INTO UserSearchesRecipes VALUES('User5', 2, 'cookie');
+INSERT INTO UserSearchesRecipes VALUES('User3', 3, 'brownie');
+INSERT INTO UserSearchesRecipes VALUES('User4', 1, 'cake');
+INSERT INTO UserSearchesRecipes VALUES('User1', 1, 'cake');
 
 CREATE TABLE CreatedList(
 	Username CHAR(20),
 	Name VARCHAR(40),
 	PRIMARY KEY(Username, Name),
 	FOREIGN KEY(Username) REFERENCES BookUser(Username)
-		ON DELETE CASCADE);
+		ON DELETE CASCADE
+		ON UPDATE CASCADE);
 
 INSERT INTO CreatedList VALUES('User5', 'Favourite Breakfast Dishes');
 INSERT INTO CreatedList  VALUES('User4', 'Easy to Make Desserts');
