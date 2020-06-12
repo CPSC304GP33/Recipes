@@ -90,8 +90,18 @@ if (isset($_POST['submit']) || isset($_POST['showall'])) {
 </form>
 <br>
 <form method="post">
-    <label for="skill">Skill Level (Easy, Medium, Hard)</label>
-    <input type="text" id="skill" name="skill">
+    <!--<label for="skill">Skill Level (Easy, Medium, Hard)</label>
+    <input type="text" id="skill" name="skill"> -->
+
+    <label for="skill">Skill Level</label>
+    <select name="skill" id="skill">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+    </select>
+
+
     <input type="submit" name="submit" value="View Results">
 </form>
 
