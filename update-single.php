@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
               Name = :Name,
               PrepTime = :PrepTime,
               CookTime = :CookTime,
-              InstructionID = :InstructionID,
+              InstructionID = :InstructionID
             WHERE ReID = :ReID";
   $statement = $connection->prepare($sql);
   $statement->execute($user);
