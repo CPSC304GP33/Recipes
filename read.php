@@ -8,7 +8,8 @@ if (isset($_POST['showall'])) {
 
         $connection = new PDO($dsn, $username, $password, $options);
 
-        $sql = "SELECT * FROM recipe AS r JOIN instruction AS i ON (r.InstructionID = i.InsID)";
+        $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt 
+                        WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
                         
 
         $statement = $connection->prepare($sql);
@@ -21,7 +22,6 @@ if (isset($_POST['showall'])) {
         
 }
 
-
 if (isset($_POST['submit'])) {
     try  {
         
@@ -30,8 +30,9 @@ if (isset($_POST['submit'])) {
 
         $connection = new PDO($dsn, $username, $password, $options);
 
-        $sql = "SELECT DISTINCT * FROM recipe AS r, instruction AS i
-                        WHERE SkillLevel = :skill AND r.InstructionID = i.InsID";
+        $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt
+                        WHERE SkillLevel = :skill AND r.InstructionID = i.InsID 
+                        AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
 
         $skill = $_POST['skill'];
 
@@ -57,12 +58,14 @@ if (isset($_POST['submit']) || isset($_POST['showall'])) {
             <thead>
                 <tr>
                     <th>ReID</th>
-                    <th>SkillLevel</th>
+                    <th>Skill Level</th>
                     <th>Name</th>
                     <th>PrepTime</th>
                     <th>CookTime</th>
+                    <th>TotalTime</th>
                     <th>Instruction</th>
                     <th>Serving Size</th>
+                    
                     
                 </tr>
             </thead>
@@ -74,9 +77,9 @@ if (isset($_POST['submit']) || isset($_POST['showall'])) {
                 <td><?php echo $row["Name"]; ?></td>
                 <td><?php echo $row["PrepTime"]; ?></td>
                 <td><?php echo $row["CookTime"]; ?></td>
+                <td><?php echo $row["TotalTime"]; ?></td>
                 <td><?php echo $row["Instructions"]; ?></td>
                 <td><?php echo $row["ServingSize"]; ?></td>
-
             </tr>
         <?php } ?>
         </tbody>
@@ -89,15 +92,19 @@ if (isset($_POST['submit']) || isset($_POST['showall'])) {
 <h2>Find recipe based on Skill Level</h2>
 
 <form method="post">
-    <input type="submit" name="showall" value="Show All Recipes">
-</form>
-<br>
-<form method="post">
-    <!--<label for="skill">Skill Level (Easy, Medium, Hard)</label>
-    <input type="text" id="skill" name="skill"> -->
+    <input type="submit" name="showall" value="Show All Recipes"><br>
+    <br>
 
-    <label for="skill">Skill Level</label>
+    <label for="skill">With Skill Level:</label>
     <select name="skill" id="skill">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+    </select>
+
+    <label for="preptime">With PrepTime:</label>
+    <select name="preptime" id="preptime">
         <option disabled selected value> -- select an option -- </option>
         <option value="Easy">Easy</option>
         <option value="Medium">Medium</option>
@@ -108,6 +115,7 @@ if (isset($_POST['submit']) || isset($_POST['showall'])) {
     <input type="submit" name="submit" value="View Results">
 </form>
 
+<br>
 <a href="index.php">Back to home</a>
 
 <?php require "templates/footer.php"; ?>

@@ -41,7 +41,8 @@ if (isset($_GET["ReID"])) {
 try {
   $connection = new PDO($dsn, $username, $password, $options);
 
-  $sql = "SELECT * FROM recipe AS r JOIN instruction AS i ON (r.InstructionID = i.InsID)";
+  $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt 
+  WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
 
   $statement = $connection->prepare($sql);
   $statement->execute();
@@ -54,29 +55,31 @@ try {
 <?php require "templates/header.php"; ?>
 
 <h2>Delete Recipe</h2>
-<?php if($deleteInstructionSuccess) echo $deleteInstructionSuccess; ?>
+
 <table>
   <thead>
     <tr>
-      <th>#</th>
-      <th>Skill Level</th>
-      <th>User Name</th>
-      <th>Prepare Time</th>
-      <th>Cook Time</th>
-      <th>Instructions</th>
-      <th>Serving Size</th>
+        <th>ReID</th>
+        <th>Skill Level</th>
+        <th>Name</th>
+        <th>PrepTime</th>
+        <th>CookTime</th>
+        <th>TotalTime</th>
+        <th>Instruction</th>
+        <th>Serving Size</th>
     </tr>
   </thead>
   <tbody>
   <?php foreach ($result as $row) : ?>
     <tr>
-    <td><?php echo escape($row["ReID"]); ?></td>
-    <td><?php echo $row["SkillLevel"]; ?></td>
-    <td><?php echo $row["Name"]; ?></td>
-    <td><?php echo $row["PrepTime"]; ?></td>
-    <td><?php echo $row["CookTime"]; ?></td>
-    <td><?php echo $row["Instructions"]; ?></td>
-    <td><?php echo $row["ServingSize"]; ?></td>
+        <td><?php echo $row["ReID"]; ?></td>
+        <td><?php echo $row["SkillLevel"]; ?></td>
+        <td><?php echo $row["Name"]; ?></td>
+        <td><?php echo $row["PrepTime"]; ?></td>
+        <td><?php echo $row["CookTime"]; ?></td>
+        <td><?php echo $row["TotalTime"]; ?></td>
+        <td><?php echo $row["Instructions"]; ?></td>
+        <td><?php echo $row["ServingSize"]; ?></td>
     <td><a href="delete.php?ReID=<?php echo escape($row["ReID"]); ?>&InstructionID=<?php echo escape($row["InstructionID"]); ?>">Delete</a></td>
     </tr>
   <?php endforeach; ?>
