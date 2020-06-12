@@ -29,6 +29,9 @@
       <li>
          <a href="update.php"><strong>Update User Info</strong></a>
       </li>
+      <li>
+      <a href="delete.php"><strong>Delete A Recipe</strong></a> - delete recipe
+      </li>
     </ul>
 
     <?php include "templates/footer.php"; ?>
