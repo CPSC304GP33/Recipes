@@ -62,7 +62,6 @@
       $statement->execute($new_rec);
 
       if (isset($_POST['submit']) && $statement) {
-        echo "<br>";
         echo escape($_POST['name']);
         echo " successfully added." . "<br>";
       }
