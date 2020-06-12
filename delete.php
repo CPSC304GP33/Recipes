@@ -40,7 +40,7 @@ if (isset($_GET["ReID"])) {
 try {
   $connection = new PDO($dsn, $username, $password, $options);
 
-  $sql = "SELECT * FROM recipe";
+  $sql = "SELECT * FROM recipe AS r JOIN instruction AS i ON (r.InstructionID = i.InsID)";
 
   $statement = $connection->prepare($sql);
   $statement->execute();
@@ -54,8 +54,6 @@ try {
 
 <h2>Delete Recipe</h2>
 
-<?php if ($success) echo $success; ?>
-
 <table>
   <thead>
     <tr>
@@ -64,18 +62,20 @@ try {
       <th>User Name</th>
       <th>Prepare Time</th>
       <th>Cook Time</th>
-      <th>InstructionID</th>
+      <th>Instructions</th>
+      <th>Serving Size</th>
     </tr>
   </thead>
   <tbody>
   <?php foreach ($result as $row) : ?>
     <tr>
     <td><?php echo escape($row["ReID"]); ?></td>
-      <td><?php echo escape($row["SkillLevel"]); ?></td>
-      <td><?php echo escape($row["Name"]); ?></td>
-      <td><?php echo escape($row["PrepTime"]); ?></td>
-      <td><?php echo escape($row["CookTime"]); ?></td>
-      <td><?php echo escape($row["InstructionID"]); ?></td>
+    <td><?php echo $row["SkillLevel"]; ?></td>
+    <td><?php echo $row["Name"]; ?></td>
+    <td><?php echo $row["PrepTime"]; ?></td>
+    <td><?php echo $row["CookTime"]; ?></td>
+    <td><?php echo $row["Instructions"]; ?></td>
+    <td><?php echo $row["ServingSize"]; ?></td>
       <td><a href="delete.php?ReID=<?php echo escape($row["ReID"]); ?>">Delete</a></td>
     </tr>
   <?php endforeach; ?>
