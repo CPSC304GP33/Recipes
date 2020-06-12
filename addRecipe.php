@@ -7,7 +7,7 @@
       $connection = new PDO($dsn, $username, $password, $options);
 
       $new_ins = array(
-        "InsID" => $_POST['iID'],
+        // "InsID" => $_POST['iID'],
         "Instructions" => $_POST['ins']
       );
 
@@ -17,6 +17,9 @@
         implode(",", array_keys($new_ins)),
         ":" . implode(", :", array_keys($new_ins))
       );
+
+      $last_id = $connection->lastInsertId();
+      echo $last_id;
 
       $statement = $connection->prepare($sql1);
       $statement->execute($new_ins);
@@ -33,10 +36,9 @@
         "TotalTime" => $_POST['tt']
       );
 
-      $ptT = strtotime($_POST['pt']);
 
       $sql2 = "INSERT INTO RecipeTime (PrepTime, CookTime, TotalTime)
-      VALUES ($ptT, ".$_POST['ct'].", ".$_POST['tt'].")";
+      VALUES ('".$_POST['pt']."', '".$_POST['ct']."', '".$_POST['tt']."')";
 
       $statement = $connection->prepare($sql2);
       $statement->execute($new_time);
@@ -52,15 +54,19 @@
         "Name" => $_POST['name'],
         "PrepTime" => $_POST['pt'],
         "CookTime" => $_POST['ct'],
-        "InstructionID" => $_POST['iID']
       );
 
-      $sql3 = sprintf(
-        "INSERT INTO %s (%s) values (%s)",
-        "Recipe",
-        implode(",", array_keys($new_rec)),
-        ":" . implode(", :", array_keys($new_rec))
-      );
+      // $sql3 = sprintf(
+      //   "INSERT INTO %s (%s) values (%s)",
+      //   "Recipe",
+      //   implode(",", array_keys($new_rec)),
+      //   ":" . implode(", :", array_keys($new_rec))
+      // );
+
+      $sql3 = "INSERT INTO Recipe (SkillLevel, Name, PrepTime, CookTime, InstructionID)
+      VALUES ('".$_POST['sl']."','".$_POST['name']."', '".$_POST['pt']."', '".$_POST['ct']."', $last_id)";
+
+
 
       $statement = $connection->prepare($sql3);
       $statement->execute($new_rec);
@@ -82,14 +88,14 @@
     <input type="text" name="name" id="name">
     <label for="sl">Skill Level (Easy, Medium, Hard)</label>
     <input type="text" name="sl" id="sl">
-    <label for="pt">Preparation Time ('HH-MM-SS')</label>
-    <input type="string" name="pt" id="pt">
-    <label for="ct">Cooking Time ('HH-MM-SS')</label>
-    <input type="string" name="ct" id="ct">
-    <label for="tt">Total Time ('HH-MM-SS')</label>
-    <input type="string" name="tt" id="tt">
-    <label for="iID">Instruction ID (Integer)</label>
-    <input type="text" name="iID" id="iID">
+    <label for="pt">Preparation Time (HHMMSS)</label>
+    <input type="Integer" name="pt" id="pt">
+    <label for="ct">Cooking Time (HHMMSS)</label>
+    <input type="Integer" name="ct" id="ct">
+    <label for="tt">Total Time (HHMMSS)</label>
+    <input type="integer" name="tt" id="tt">
+    <!-- <label for="iID">Instruction ID (Integer)</label> -->
+    <!-- <input type="text" name="iID" id="iID"> -->
     <label for="ins">Instructions</label>
     <input type="text" name="ins" id="ins">
     <input type="submit" name="submit" value="Submit">
@@ -98,3 +104,4 @@
   <a href="index.php">Back to home</a>
 
 <?php include "templates/footer.php"; ?>
+
