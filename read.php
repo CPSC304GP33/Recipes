@@ -8,7 +8,8 @@ if (isset($_POST['showall'])) {
 
         $connection = new PDO($dsn, $username, $password, $options);
 
-        $sql = "SELECT * FROM recipe";
+        $sql = "SELECT * FROM recipe AS r JOIN instruction AS i ON (r.InstructionID = i.InsID)";
+                        
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -29,9 +30,8 @@ if (isset($_POST['submit'])) {
 
         $connection = new PDO($dsn, $username, $password, $options);
 
-        $sql = "SELECT * 
-                        FROM recipe
-                        WHERE SkillLevel = :skill";
+        $sql = "SELECT DISTINCT * FROM recipe AS r, instruction AS i
+                        WHERE SkillLevel = :skill AND r.InstructionID = i.InsID";
 
         $skill = $_POST['skill'];
 
@@ -61,7 +61,8 @@ if (isset($_POST['submit']) || isset($_POST['showall'])) {
                     <th>Name</th>
                     <th>PrepTime</th>
                     <th>CookTime</th>
-                    <th>InstructionID</th>
+                    <th>Instruction</th>
+                    <th>Serving Size</th>
                     
                 </tr>
             </thead>
@@ -73,7 +74,9 @@ if (isset($_POST['submit']) || isset($_POST['showall'])) {
                 <td><?php echo $row["Name"]; ?></td>
                 <td><?php echo $row["PrepTime"]; ?></td>
                 <td><?php echo $row["CookTime"]; ?></td>
-                <td><?php echo $row["InstructionID"]; ?></td>
+                <td><?php echo $row["Instructions"]; ?></td>
+                <td><?php echo $row["ServingSize"]; ?></td>
+
             </tr>
         <?php } ?>
         </tbody>
