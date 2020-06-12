@@ -7,8 +7,8 @@
       $connection = new PDO($dsn, $username, $password, $options);
 
       $new_ins = array(
-        // "InsID" => $_POST['iID'],
-        "Instructions" => $_POST['ins']
+        "Instructions" => $_POST['ins'],
+        "ServingSize" => $_POST['ss']
       );
 
       $sql1 = sprintf(
@@ -18,11 +18,9 @@
         ":" . implode(", :", array_keys($new_ins))
       );
 
-      $last_id = $connection->lastInsertId();
-      echo $last_id;
-
       $statement = $connection->prepare($sql1);
       $statement->execute($new_ins);
+      $last_id = $connection->lastInsertId();
 
     } catch(PDOException $error) {
       echo $sql1 . "<br>" . $error->getMessage();
@@ -56,17 +54,8 @@
         "CookTime" => $_POST['ct'],
       );
 
-      // $sql3 = sprintf(
-      //   "INSERT INTO %s (%s) values (%s)",
-      //   "Recipe",
-      //   implode(",", array_keys($new_rec)),
-      //   ":" . implode(", :", array_keys($new_rec))
-      // );
-
       $sql3 = "INSERT INTO Recipe (SkillLevel, Name, PrepTime, CookTime, InstructionID)
       VALUES ('".$_POST['sl']."','".$_POST['name']."', '".$_POST['pt']."', '".$_POST['ct']."', $last_id)";
-
-
 
       $statement = $connection->prepare($sql3);
       $statement->execute($new_rec);
@@ -94,8 +83,8 @@
     <input type="Integer" name="ct" id="ct">
     <label for="tt">Total Time (HHMMSS)</label>
     <input type="integer" name="tt" id="tt">
-    <!-- <label for="iID">Instruction ID (Integer)</label> -->
-    <!-- <input type="text" name="iID" id="iID"> -->
+    <label for="ss">Serving Size</label>
+    <input type="integer" name="ss" id="ss">
     <label for="ins">Instructions</label>
     <input type="text" name="ins" id="ins">
     <input type="submit" name="submit" value="Submit">
@@ -104,4 +93,3 @@
   <a href="index.php">Back to home</a>
 
 <?php include "templates/footer.php"; ?>
-
