@@ -1,5 +1,26 @@
 <?php
 
+if (isset($_POST['showall'])) {
+    try  {
+        
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT * FROM recipe";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+        
+}
+
+
 if (isset($_POST['submit'])) {
     try  {
         
@@ -28,7 +49,7 @@ if (isset($_POST['submit'])) {
 <?php require "templates/header.php"; ?>
         
 <?php  
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) || isset($_POST['showall'])) {
     if ($result && $statement->rowCount() > 0) { ?>
         <h2>Results</h2>
 
@@ -62,8 +83,12 @@ if (isset($_POST['submit'])) {
     <?php } 
 } ?> 
 
-<h2>Find user based on skill</h2>
+<h2>Find recipe based on Skill Level</h2>
 
+<form method="post">
+    <input type="submit" name="showall" value="Show All Recipes">
+</form>
+<br>
 <form method="post">
     <label for="skill">Skill Level (Easy, Medium, Hard)</label>
     <input type="text" id="skill" name="skill">
