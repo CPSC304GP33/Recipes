@@ -1,3 +1,4 @@
+<?php include "templates/header.php"; ?>
 <?php
   if (isset($_POST['submit'])) {
     require "config.php";
@@ -42,7 +43,7 @@
       $statement->execute($new_time);
 
     } catch(PDOException $error) {
-      echo $sql2 . "<br>" . $error->getMessage();
+      // echo $sql2 . "<br>" . $error->getMessage();
     }
     try {
       $connection = new PDO($dsn, $username, $password, $options);
@@ -60,15 +61,16 @@
       $statement = $connection->prepare($sql3);
       $statement->execute($new_rec);
 
+      if (isset($_POST['submit']) && $statement) {
+        echo "<br>";
+        echo escape($_POST['name']);
+        echo " successfully added." . "<br>";
+      }
+
     } catch(PDOException $error) {
       echo $sql3 . "<br>" . $error->getMessage();
     }
   } ?>
-
-  <?php include "templates/header.php"; ?>
-  <?php if (isset($_POST['submit']) && $statement) { ?>
-    <?php echo escape($_POST['name']); ?> successfully added.
-  <?php } ?>
 
   <h2>Add a recipe</h2>
 
