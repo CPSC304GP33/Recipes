@@ -26,6 +26,9 @@
       <li>
         <a href="findUser.php"><strong>Find a User</strong></a>
       </li>
+      <li>
+         <a href="update.php"><strong>Update User Info</strong></a>
+      </li>
     </ul>
 
     <?php include "templates/footer.php"; ?>
