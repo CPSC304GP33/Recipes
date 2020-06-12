@@ -23,6 +23,9 @@
       <li>
         <a href="read.php"><strong>Filter Recipe</strong></a>
       </li>
+      <li>
+        <a href="findUser.php"><strong>Find a User</strong></a>
+      </li>
     </ul>
 
     <?php include "templates/footer.php"; ?>
