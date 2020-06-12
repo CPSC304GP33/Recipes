@@ -13,17 +13,18 @@ if (isset($_GET["ReID"])) {
     $connection = new PDO($dsn, $username, $password, $options);
 
     $ReID = $_GET["ReID"];
+    $InstructionID = $_GET["InstructionID"];
 
     //Get InsID to delete Instruction from Instruction table first 
-    /*
-    $sql = "SELECT InstructionID FROM recipe WHERE ReID =:ReID";
+    
+    $sql = "DELETE FROM instruction WHERE InsID = :InstructionID";
 
     $statement = $connection->prepare($sql);
-    $statement->bindValue(':ReID', $ReID);
+    $statement->bindValue(':InstructionID', $InstructionID);
     $statement->execute();
 
-    $result = $statement->fetch(PDO::FETCH_ASSOC) ;
-    */
+    $deleteInstructionSuccess = "Instruction successfully deleted.";
+    
 
     $sql = "DELETE FROM recipe WHERE ReID = :ReID";
 
@@ -53,11 +54,11 @@ try {
 <?php require "templates/header.php"; ?>
 
 <h2>Delete Recipe</h2>
-
+<?php if($deleteInstructionSuccess) echo $deleteInstructionSuccess; ?>
 <table>
   <thead>
     <tr>
-    <th>#</th>
+      <th>#</th>
       <th>Skill Level</th>
       <th>User Name</th>
       <th>Prepare Time</th>
@@ -76,7 +77,7 @@ try {
     <td><?php echo $row["CookTime"]; ?></td>
     <td><?php echo $row["Instructions"]; ?></td>
     <td><?php echo $row["ServingSize"]; ?></td>
-      <td><a href="delete.php?ReID=<?php echo escape($row["ReID"]); ?>">Delete</a></td>
+    <td><a href="delete.php?ReID=<?php echo escape($row["ReID"]); ?>&InstructionID=<?php echo escape($row["InstructionID"]); ?>">Delete</a></td>
     </tr>
   <?php endforeach; ?>
   </tbody>
