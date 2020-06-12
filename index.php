@@ -27,10 +27,10 @@
         <a href="findUser.php"><strong>Find a User</strong></a>
       </li>
       <li>
-         <a href="update.php"><strong>Update User Info</strong></a>
+         <a href="update.php"><strong>Update Recipe</strong></a>
       </li>
       <li>
-      <a href="delete.php"><strong>Delete A Recipe</strong></a> - delete recipe
+      <a href="delete.php"><strong>Delete A Recipe</strong></a> 
       </li>
     </ul>
 
