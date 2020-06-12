@@ -30,8 +30,11 @@
          <a href="update.php"><strong>Update Recipe</strong></a>
       </li>
       <li>
-      <a href="delete.php"><strong>Delete A Recipe</strong></a> 
+        <a href="delete.php"><strong>Delete A Recipe</strong></a> 
       </li>
+      <p>
+        <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+      </p>
     </ul>
 
     <?php include "templates/footer.php"; ?>
