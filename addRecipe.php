@@ -65,7 +65,7 @@
         "CookTime" => $_POST['ct'],
       );
 
-      $sql3 = "INSERT INTO Recipe (SkillLevel, Name, PrepTime, CookTime, InstructionID)
+      $sql3 = "INSERT INTO Recipe (SkillLevel, Name, PrepTime, CookTime, InstructionID, Username)
       VALUES ('".$_POST['sl']."','".$_POST['name']."', '".$_POST['pt']."', '".$_POST['ct']."', $last_id, '".$_SESSION['username']."')";
 
       $statement = $connection->prepare($sql3);
