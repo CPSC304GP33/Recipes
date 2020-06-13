@@ -56,11 +56,11 @@ FOREIGN KEY (Username) REFERENCES BookUser (Username)
 	ON UPDATE CASCADE
 );
 
-INSERT INTO Recipe VALUES (1, 'Easy', 'Tiramisu', '00:10:00', '00:50:00', 1, 'User 1');
-INSERT INTO Recipe VALUES (2, 'Easy', 'Chocolate Cookie', '00:20:00', '00:15:00', 2, 'User 1');
-INSERT INTO Recipe VALUES (3, 'Medium', 'White Chocolate Brownie', '00:03:00', '00:10:00', 3, 'User 2');
-INSERT INTO Recipe VALUES (4, 'Hard', 'Lasagna', '03:00:00', '01:00:00', 4, 'User 3');
-INSERT INTO Recipe VALUES (5, 'Hard', 'Macaron', '04:00:00', '00:30:00', 5, 'User 4');
+INSERT INTO Recipe VALUES (1, 'Easy', 'Tiramisu', '00:10:00', '00:50:00', 1, 'User1');
+INSERT INTO Recipe VALUES (2, 'Easy', 'Chocolate Cookie', '00:20:00', '00:15:00', 2, 'User1');
+INSERT INTO Recipe VALUES (3, 'Medium', 'White Chocolate Brownie', '00:03:00', '00:10:00', 3, 'User2');
+INSERT INTO Recipe VALUES (4, 'Hard', 'Lasagna', '03:00:00', '01:00:00', 4, 'User3');
+INSERT INTO Recipe VALUES (5, 'Hard', 'Macaron', '04:00:00', '00:30:00', 5, 'User4');
 
 
 CREATE TABLE Ingredient (
