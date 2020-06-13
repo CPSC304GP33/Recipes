@@ -186,9 +186,8 @@ echo "</table>";
 }
 include 'connect.php';
 $cust_cols = $_POST['cust_cols'];
-$where_cols = $_POST['where_cols'];
 $conn = OpenCon();
-$sql = "select $cust_cols from recipe where SkillLevel = '$where_cols'";
+$sql = "select $cust_cols from recipe";
 myTable($conn,$sql);
 }
 ?>
@@ -231,10 +230,6 @@ ReID | SkillLevel | Name | PrepTime | CookTime | TotalTime | Instruction | Servi
 <br> <br>
 <label>Enter Column Name with comma Seprated</label>
 <input name="cust_cols" type="text" placeholder="Type Here">
-<br>
-<label>Where Skill Level (Easy, Medium, Hard):</label>
-<input name="where_cols" type="text" placeholder="Type Here">
-<br>
 <br>
 <input type="submit" name = 'Search' value="Search">
 </form>
