@@ -67,7 +67,8 @@ if (isset($_POST['time'])) {
 
         $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt
                         WHERE rt.TotalTime <= $val AND r.InstructionID = i.InsID
-                        AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
+                        AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime
+                        ORDER BY rt.TotalTime DESC";
 
         $totaltime = $_POST['totaltime'];
 
@@ -155,7 +156,7 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltim
 
 <?php
 if (isset($_POST['Search'])) {
-function myTable($obConn,$sql)
+    function myTable($obConn,$sql)
 {
 $rsResult = mysqli_query($obConn, $sql) or die(mysqli_error($obConn));
 if(mysqli_num_rows($rsResult)>0)
@@ -185,9 +186,12 @@ echo "</table>";
 }
 }
 include 'connect.php';
-$cust_cols = $_POST['cust_cols'];
+$cust_cols_array = $_POST['cols'];
+
+$cols = implode(",", $cust_cols_array);
 $conn = OpenCon();
-$sql = "select $cust_cols from recipe";
+$sql = "SELECT $cols FROM Recipe AS r, Instruction AS i, Recipetime AS rt
+        WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
 myTable($conn,$sql);
 }
 ?>
@@ -225,15 +229,20 @@ myTable($conn,$sql);
 <br><br>
 
 <form method="post">
-</br><h3>View Selected Columns:</h3>
-ReID | SkillLevel | Name | PrepTime | CookTime | TotalTime | Instruction | ServingSize | Username
-<br> <br>
-<label>Enter Column Name with comma Seprated</label>
-<input name="cust_cols" type="text" placeholder="Type Here">
-<br>
-<input type="submit" name = 'Search' value="Search">
-</form>
+    </br><h3>View Selected Columns:</h3>
+    <input type="checkbox" name="cols[]" value="ReID" />ReID<br />
+    <input type="checkbox" name="cols[]" value="SkillLevel" />SkillLevel<br />
+    <input type="checkbox" name="cols[]" value="Name" />Name<br />
+    <input type="checkbox" name="cols[]" value="rt.PrepTime" />PrepTime<br />
+    <input type="checkbox" name="cols[]" value="rt.CookTime" />CookTime<br />
+    <input type="checkbox" name="cols[]" value="rt.TotalTime" />TotalTime<br />
+    <input type="checkbox" name="cols[]" value="Instructions" />Instruction<br />
+    <input type="checkbox" name="cols[]" value="ServingSize" />ServingSize<br />
+    <input type="checkbox" name="cols[]" value="Username" />Username
 
+    <br><input type="submit" name="Search" value="View" />
+
+</form>
 
 <br>
 <a href="index.php">Back to home</a>
