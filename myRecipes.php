@@ -60,6 +60,58 @@ if (isset($_POST['total#'])) {
     }
 
 }
+
+if (isset($_POST['ing#'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT r.ReID, r.Name, COUNT(*) as total
+        FROM recipe r, RecipeContainsIngredient ri
+        WHERE r.username = :username1 AND r.ReID = ri.ReID
+        GROUP BY r.ReID, r.Name";
+
+
+        $statement = $connection->prepare($sql);
+        $statement->bindParam(':username1', $username1, PDO::PARAM_STR);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+
+}
+
+if (isset($_POST['aveIng#'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT AVG(total) FROM (SELECT COUNT(*) as total
+        FROM recipe r, RecipeContainsIngredient ri
+        WHERE r.username = :username1 AND r.ReID = ri.ReID
+        GROUP BY r.ReID, r.Name) as t";
+
+
+        $statement = $connection->prepare($sql);
+        $statement->bindParam(':username1', $username1, PDO::PARAM_STR);
+        $statement->execute();
+
+        $result = $statement->fetchColumn();
+
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+
+}
 ?>
 <?php
 
@@ -103,10 +155,51 @@ if (isset($_POST['showall']) ) {
 <?php
 if (isset($_POST['total#']) ) {
     if ($result) {
+        echo "<br>";
         echo "Total number of recipes: " . $result . "<br>";
     } else { ?>
         <blockquote>No results found for <?php echo escape($_SESSION['username']); ?>.</blockquote>
     <?php }
+} ?>
+
+<?php
+if (isset($_POST['ing#']) ) {
+    if ($result && $statement->rowCount() > 0) { ?>
+        <h2>Recipes with # of Ingredients Used</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ReID</th>
+                    <th>Name</th>
+                    <th># of Ingredients</th>
+                </tr>
+            </thead>
+            <tbody>
+        <?php foreach ($result as $row) { ?>
+            <tr>
+                <td><?php echo $row["ReID"]; ?></td>
+                <td><?php echo $row["Name"]; ?></td>
+                <td><?php echo $row["total"]; ?></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+    echo "<br>" . "Note: Recipes with no ingredients used are not shown.";
+  } else { ?>
+        <blockquote>No results found for <?php echo escape($_SESSION['username']); ?>.</blockquote>
+    <?php }
+} ?>
+
+<?php
+if (isset($_POST['aveIng#']) ) {
+  if ($result) {
+      echo "<br>";
+      echo "Average number of ingredients used per recipe: " . $result . "<br>";
+  } else { ?>
+      <blockquote>No results found for <?php echo escape($_SESSION['username']); ?>.</blockquote>
+  <?php }
 } ?>
 
 <form method="post">
@@ -114,6 +207,12 @@ if (isset($_POST['total#']) ) {
 </form>
 <form method="post">
   <input type="submit" name = total# value="My Recipe Count">
+</form>
+<form method="post">
+  <input type="submit" name = ing# value="Recipes with # of Ingredients Used">
+</form>
+<form method="post">
+  <input type="submit" name = aveIng# value="Average # of Ingredients Used per Recipe">
 </form>
 
 <br>
