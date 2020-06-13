@@ -37,6 +37,9 @@
       <li>
         <a href="delete.php"><strong>Delete A Recipe</strong></a> 
       </li>
+      <li>
+        <a href="myRecipes.php"><strong>My Recipes</strong></a> 
+      </li>
       <p>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
       </p>
