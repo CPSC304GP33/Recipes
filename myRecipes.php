@@ -38,6 +38,30 @@ if (isset($_POST['showall'])) {
 
 }
 
+if (isset($_POST['showfavall'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt, userfavoritesrecipes AS ur
+                        WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime
+                        AND rt.CookTime = r.CookTime AND ur.ReID = r.ReID AND ur.Username = :username1";
+
+        $statement = $connection->prepare($sql);
+        $statement->bindParam(':username1', $username1, PDO::PARAM_STR);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+
+}
+
 if (isset($_POST['total#'])) {
     try  {
 
@@ -115,7 +139,7 @@ if (isset($_POST['aveIng#'])) {
 ?>
 <?php
 
-if (isset($_POST['showall']) ) {
+if (isset($_POST['showall']) || isset($_POST['showfavall'])) {
     if ($result && $statement->rowCount() > 0) { ?>
         <h2>My Recipes</h2>
 
@@ -201,16 +225,27 @@ if (isset($_POST['aveIng#']) ) {
       <blockquote>No results found for <?php echo escape($_SESSION['username']); ?>.</blockquote>
   <?php }
 } ?>
+<br>
+
 
 <form method="post">
-  <input type="submit" name = showall value="View All Recipes">
+  <input type="submit" name = showall value="View All of My Created Recipes">
 </form>
+<br>
+
+<form method="post">
+  <input type="submit" name = showfavall value="View All of My Favorited Recipes">
+</form>
+<br>
+
 <form method="post">
   <input type="submit" name = total# value="My Recipe Count">
 </form>
+<br>
 <form method="post">
   <input type="submit" name = ing# value="Recipes with # of Ingredients Used">
 </form>
+<br>
 <form method="post">
   <input type="submit" name = aveIng# value="Average # of Ingredients Used per Recipe">
 </form>
