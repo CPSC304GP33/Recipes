@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
   <?php }
 } ?>
 
-  <h2>Find user based on username</h2>
+  <h2>Find a user's recipes based on username</h2>
 
   <form method="post">
     <label for="username">Username</label>

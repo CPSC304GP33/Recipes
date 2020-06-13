@@ -29,16 +29,13 @@
         <a href="read.php"><strong>Filter Recipe</strong></a>
       </li>
       <li>
-        <a href="findUser.php"><strong>Find a User</strong></a>
+        <a href="findUser.php"><strong>Find a User's recipes</strong></a>
       </li>
       <li>
          <a href="update.php"><strong>Update Recipe</strong></a>
       </li>
       <li>
         <a href="delete.php"><strong>Delete A Recipe</strong></a> 
-      </li>
-      <li>
-        <a href="myRecipes.php"><strong>My Recipes</strong></a>
       </li>
       <p>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
