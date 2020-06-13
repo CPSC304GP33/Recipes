@@ -15,17 +15,17 @@ INSERT INTO Instruction VALUES (4,'Cook sauce. Cook lasagna noodles. Spread laye
 INSERT INTO Instruction VALUES (5,'Mix ingredients in a bowl. Use a hand mixer to make the merengue. Spread mix on the baking sheet in circles. Bake the macaron shells. Sandwich the merengue in between the shells', 10);
 
 CREATE TABLE RecipeTime (
-TimeKey INTEGER AUTO_INCREMENT PRIMARY KEY,
 PrepTime TIME(0),
 CookTime TIME(0),
-TotalTime TIME(0)
+TotalTime TIME(0) NOT NULL,
+PRIMARY KEY (PrepTime, CookTime)
 );
 
-INSERT INTO RecipeTime VALUES (1,'00:10:00', '00:50:00', '01:00:00');
-INSERT INTO RecipeTime VALUES (2,'00:20:00', '00:15:00', '00:35:00');
-INSERT INTO RecipeTime VALUES (3,'00:03:00', '00:10:00', '00:13:00');
-INSERT INTO RecipeTime VALUES (4,'03:00:00', '01:00:00', '04:00:00');
-INSERT INTO RecipeTime VALUES (5,'04:00:00', '00:30:00', '04:30:00');
+INSERT INTO RecipeTime VALUES ('00:10:00', '00:50:00', '01:00:00');
+INSERT INTO RecipeTime VALUES ('00:20:00', '00:15:00', '00:35:00');
+INSERT INTO RecipeTime VALUES ('00:03:00', '00:10:00', '00:13:00');
+INSERT INTO RecipeTime VALUES ('03:00:00', '01:00:00', '04:00:00');
+INSERT INTO RecipeTime VALUES ('04:00:00', '00:30:00', '04:30:00');
 
 CREATE TABLE BookUser (
 Username CHAR(20) PRIMARY KEY,
@@ -45,11 +45,12 @@ CREATE TABLE Recipe (
 ReID INTEGER AUTO_INCREMENT PRIMARY KEY,
 SkillLevel CHAR(20),
 Name VARCHAR(100) NOT NULL,
-TimeKey INTEGER,
+PrepTime TIME(0) NOT NULL,
+CookTime TIME(0) NOT NULL,
 InstructionID INTEGER UNIQUE NOT NULL,
 Username CHAR(20) NOT NULL,
-FOREIGN KEY (TimeKey) REFERENCES RecipeTime (TimeKey)
-		ON DELETE CASCADE
+FOREIGN KEY (PrepTime, CookTime) REFERENCES RecipeTime (PrepTime, CookTime)
+		ON DELETE NO ACTION
 		ON UPDATE CASCADE,
 FOREIGN KEY (InstructionID) REFERENCES Instruction(InsID)
 	ON DELETE CASCADE
@@ -59,11 +60,11 @@ FOREIGN KEY (Username) REFERENCES BookUser (Username)
 	ON UPDATE CASCADE
 );
 
-INSERT INTO Recipe VALUES (1, 'Easy', 'Tiramisu', 1, 1, 'User1');
-INSERT INTO Recipe VALUES (2, 'Easy', 'Chocolate Cookie', 2, 2, 'User1');
-INSERT INTO Recipe VALUES (3, 'Medium', 'White Chocolate Brownie', 3, 3, 'User2');
-INSERT INTO Recipe VALUES (4, 'Hard', 'Lasagna', 4, 4, 'User3');
-INSERT INTO Recipe VALUES (5, 'Hard', 'Macaron', 5, 5, 'User4');
+INSERT INTO Recipe VALUES (1, 'Easy', 'Tiramisu', '00:10:00', '00:50:00', 1, 'User1');
+INSERT INTO Recipe VALUES (2, 'Easy', 'Chocolate Cookie', '00:20:00', '00:15:00', 2, 'User1');
+INSERT INTO Recipe VALUES (3, 'Medium', 'White Chocolate Brownie', '00:03:00', '00:10:00', 3, 'User2');
+INSERT INTO Recipe VALUES (4, 'Hard', 'Lasagna', '03:00:00', '01:00:00', 4, 'User3');
+INSERT INTO Recipe VALUES (5, 'Hard', 'Macaron', '04:00:00', '00:30:00', 5, 'User4');
 
 
 CREATE TABLE Ingredient (

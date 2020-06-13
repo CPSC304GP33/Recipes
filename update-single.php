@@ -17,25 +17,30 @@ if (isset($_POST['submit'])) {
       "SkillLevel"    => $_POST['SkillLevel'],
       "Name"       => $_POST['Name'],
       "PrepTime"     => $_POST['PrepTime'],
-      "CookTime"       => $_POST['CookTime'],
-      "TotalTime"       => $_POST['TotalTime'],
-      "Instructions"       => $_POST['Instructions'],
-      "ServingSize"       => $_POST['ServingSize']
+      "CookTime"       => $_POST['CookTime']
+      // "TotalTime"       => $_POST['TotalTime']
+      // "Instructions"       => $_POST['Instructions'],
+      // "ServingSize"       => $_POST['ServingSize']
     ];
-
+    // UPDATE RecipeTime
+    //             SET PrepTime = :PrepTime,
+    //             CookTime = :CookTime,
+    //             TotalTime = :TotalTime
+    //         WHERE PrepTime = (SELECT Recipe.PrepTime FROM Recipe WHERE ReID = :ReID) AND PrepTime = (SELECT Recipe.CookTime FROM Recipe WHERE ReID = :ReID);
+    // INSERT INTO RecipeTime (PrepTime, CookTime, TotalTime)
+    //         VALUES ('".$_POST['PrepTime']."', '".$_POST['CookTime']."', '".$_POST['TotalTime']."');
+    //         UPDATE Instruction
+    //             SET Instructions = :Instructions,
+    //             ServingSize = :ServingSize
+    //         WHERE InsID = (SELECT Recipe.InstructionID FROM Recipe WHERE ReID = :ReID);
     $sql = "UPDATE Recipe
                 SET SkillLevel = :SkillLevel,
-                Name = :Name
-            WHERE ReID = :ReID;
-            UPDATE Instruction
-                SET Instructions = :Instructions,
-                ServingSize = :ServingSize
-            WHERE InsID = (SELECT Recipe.InstructionID FROM Recipe WHERE ReID = :ReID);
-            UPDATE RecipeTime
-                SET PrepTime = :PrepTime,
-                CookTime = :CookTime,
-                TotalTime = :TotalTime
-            WHERE TimeKey = (SELECT Recipe.TimeKey FROM Recipe WHERE ReID = :ReID)";
+                Name = :Name,
+                PrepTime = :PrepTime,
+                CookTime = :CookTime
+                -- TotalTime = :TotalTime
+            WHERE ReID = :ReID";
+
   $statement = $connection->prepare($sql);
   $statement->execute($user);
   } catch(PDOException $error) {
@@ -46,7 +51,7 @@ if (isset($_GET['ReID'])) {
   try {
     $connection = new PDO($dsn, $username, $password, $options);
     $ReID = $_GET['ReID'];
-    $sql = "SELECT r.ReID, r.SkillLevel, r.Name, rt.PrepTime, rt.CookTime, rt.TotalTime, i.Instructions, i.ServingSize FROM Recipe AS r, Instruction AS i, RecipeTime AS rt WHERE r.InstructionID = i.InsID AND rt.TimeKey = r.TimeKey AND r.ReID =:ReID";
+    $sql = "SELECT r.ReID, r.SkillLevel, r.Name, r.PrepTime, r.CookTime, rt.TotalTime, i.Instructions, i.ServingSize FROM Recipe AS r, Instruction AS i, RecipeTime AS rt WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime AND r.ReID =:ReID";
     $statement = $connection->prepare($sql);
     $statement->bindValue(':ReID', $ReID);
     $statement->execute();
