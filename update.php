@@ -17,7 +17,7 @@ try {
   $connection = new PDO($dsn, $username, $password, $options);
 
   $sql = "SELECT * FROM Recipe AS r, Instruction AS i, RecipeTime AS rt
-  WHERE r.InstructionID = i.InsID AND rt.TimeKey = r.TimeKey";
+  WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
 
   $statement = $connection->prepare($sql);
   $statement->execute();
