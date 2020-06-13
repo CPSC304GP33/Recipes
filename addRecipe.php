@@ -1,5 +1,15 @@
 <?php include "templates/header.php"; ?>
 <?php
+  if(session_id() == '') {
+    session_start();
+  }
+
+  if(!empty($_SESSION['username'])) {
+     $username = $_SESSION['username'];
+     echo "Currently logged in as: ". $username . "<br>";
+  } else{
+     echo 'no session';
+  }
   if (isset($_POST['submit'])) {
     require "config.php";
     require "common.php";
@@ -56,7 +66,7 @@
       );
 
       $sql3 = "INSERT INTO Recipe (SkillLevel, Name, PrepTime, CookTime, InstructionID)
-      VALUES ('".$_POST['sl']."','".$_POST['name']."', '".$_POST['pt']."', '".$_POST['ct']."', $last_id)";
+      VALUES ('".$_POST['sl']."','".$_POST['name']."', '".$_POST['pt']."', '".$_POST['ct']."', $last_id, '".$_SESSION['username']."')";
 
       $statement = $connection->prepare($sql3);
       $statement->execute($new_rec);
