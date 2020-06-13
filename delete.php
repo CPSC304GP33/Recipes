@@ -1,9 +1,15 @@
 <?php
 
-/**
-  * Delete a user
-  */
+if(session_id() == '') {
+  session_start();
+}
 
+if(!empty($_SESSION['username'])) {
+   $username = $_SESSION['username'];
+   echo "Currently logged in as: ". $username . "<br>";
+} else{
+   echo 'no session';
+}
 require "./config.php";
 require "./common.php";
 
