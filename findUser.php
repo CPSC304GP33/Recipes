@@ -17,8 +17,9 @@
       $connection = new PDO($dsn, $username, $password, $options);
 
       $sql = "SELECT *
-        FROM BookUser
-        WHERE username = :username";
+        FROM BookUser AS bu, recipe AS r, instruction AS i, recipetime AS rt
+        WHERE bu.username = :username AND bu.Username = r.Username AND i.InsID = r.InstructionID
+                                      AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
 
       $username = $_POST['username'];
 
@@ -48,15 +49,31 @@ if (isset($_POST['submit'])) {
   <th>Email Address</th>
   <th>Dietary Restrictions</th>
   <th>Preferences</th>
+  <th>ReID</th>
+  <th>Skill Level</th>
+  <th>Name</th>
+  <th>PrepTime</th>
+  <th>CookTime</th>
+  <th>TotalTime</th>
+  <th>Instruction</th>
+  <th>Serving Size</th>
 </tr>
     </thead>
     <tbody>
   <?php foreach ($result as $row) {?>
       <tr>
-<td><?php echo escape($row["Username"]); ?></td>
-<td><?php echo escape($row["Email"]); ?></td>
-<td><?php echo escape($row["DietaryRestrictions"]); ?></td>
-<td><?php echo escape($row["Preferences"]); ?></td>
+        <td><?php echo escape($row["Username"]); ?></td>
+        <td><?php echo escape($row["Email"]); ?></td>
+        <td><?php echo escape($row["DietaryRestrictions"]); ?></td>
+        <td><?php echo escape($row["Preferences"]); ?></td>
+        <td><?php echo $row["ReID"]; ?></td>
+        <td><?php echo $row["SkillLevel"]; ?></td>
+        <td><?php echo $row["Name"]; ?></td>
+        <td><?php echo $row["PrepTime"]; ?></td>
+        <td><?php echo $row["CookTime"]; ?></td>
+        <td><?php echo $row["TotalTime"]; ?></td>
+        <td><?php echo $row["Instructions"]; ?></td>
+        <td><?php echo $row["ServingSize"]; ?></td>
       </tr>
     <?php } ?>
       </tbody>
