@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -8,37 +9,44 @@
 require "./config.php";
 require "./common.php";
 if (isset($_POST['submit'])) {
-  try {
+  try { //# of parameters in try must be the same in the $sql, in this case,
+        //we have 8 parameters in try and $sql
     $connection = new PDO($dsn, $username, $password, $options);
     $user =[
-      "ReID"        => $_POST['ReID'],
-      "SkillLevel" => $_POST['SkillLevel'],
-      "Name"  => $_POST['Name'],
+      "ReID"    => $_POST['ReID'],
+      "SkillLevel"    => $_POST['SkillLevel'],
+      "Name"       => $_POST['Name'],
       "PrepTime"     => $_POST['PrepTime'],
       "CookTime"       => $_POST['CookTime'],
-      "InstructionID"  => $_POST['InstructionID']
+      "TotalTime"       => $_POST['TotalTime'],
+      "Instructions"       => $_POST['Instructions'],
+      "ServingSize"       => $_POST['ServingSize']
     ];
 
     $sql = "UPDATE Recipe
-            SET ReID = :ReID,
-              SkillLevel = :SkillLevel,
-              Name = :Name,
-              PrepTime = :PrepTime,
-              CookTime = :CookTime,
-              InstructionID = :InstructionID
-            WHERE ReID = :ReID";
+                SET SkillLevel = :SkillLevel,
+                Name = :Name
+            WHERE ReID = :ReID;
+            UPDATE Instruction
+                SET Instructions = :Instructions,
+                ServingSize = :ServingSize
+            WHERE InsID = (SELECT Recipe.InstructionID FROM Recipe WHERE ReID = :ReID);
+            UPDATE RecipeTime
+                SET PrepTime = :PrepTime,
+                CookTime = :CookTime,
+                TotalTime = :TotalTime
+            WHERE TimeKey = (SELECT Recipe.TimeKey FROM Recipe WHERE ReID = :ReID)";
   $statement = $connection->prepare($sql);
   $statement->execute($user);
   } catch(PDOException $error) {
       echo $sql . "<br>" . $error->getMessage();
   }
 }
-
 if (isset($_GET['ReID'])) {
   try {
     $connection = new PDO($dsn, $username, $password, $options);
     $ReID = $_GET['ReID'];
-    $sql = "SELECT * FROM Recipe WHERE ReID = :ReID";
+    $sql = "SELECT r.ReID, r.SkillLevel, r.Name, rt.PrepTime, rt.CookTime, rt.TotalTime, i.Instructions, i.ServingSize FROM Recipe AS r, Instruction AS i, RecipeTime AS rt WHERE r.InstructionID = i.InsID AND rt.TimeKey = r.TimeKey AND r.ReID =:ReID";
     $statement = $connection->prepare($sql);
     $statement->bindValue(':ReID', $ReID);
     $statement->execute();
