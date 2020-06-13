@@ -81,13 +81,38 @@ if (isset($_POST['time'])) {
     }
 
 }
+
+if (isset($_POST['showfavbyall'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT * FROM Recipe AS r, Instruction AS i, RecipeTime AS rt
+                        WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime AND r.ReID = (SELECT r1.ReID FROM Recipe AS r1
+                            WHERE NOT EXISTS (
+                            (SELECT Username FROM BookUser) 
+                            EXCEPT (SELECT ur.Username FROM UserFavoritesRecipes As ur WHERE ur.ReID = r1.ReID)))";
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+
+}
+
 ?>
 
 <?php require "templates/header.php"; ?>
 
 <?php
 
-if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltime']) ) {
+if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltime']) || isset($_POST['showfavbyall'])) {
     if ($result && $statement->rowCount() > 0) { ?>
         <h2>Results</h2>
 
@@ -173,7 +198,8 @@ myTable($conn,$sql);
 <form method="post">
     <input type="submit" name="showall" value="Show All Recipes"><br>
     <br>
-
+    <input type="submit" name="showfavbyall" value="Show All Recipes favorited by all users"><br>
+    <br>
     <label for="skill">With Skill Level:</label>
     <select name="skill" id="skill">
         <option disabled selected value> -- select an option -- </option>
