@@ -11,15 +11,15 @@
   }
 if (isset($_POST['showall'])) {
     try  {
-        
+
         include 'config.php';
         require 'common.php';
 
         $connection = new PDO($dsn, $username, $password, $options);
 
-        $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt 
+        $sql = "SELECT * FROM Recipe AS r, Instruction AS i, Recipetime AS rt
                         WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
-                        
+
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -28,19 +28,19 @@ if (isset($_POST['showall'])) {
     } catch(PDOException $error) {
         echo $sql . "<br>" . $error->getMessage();
     }
-        
+
 }
 
 if (isset($_POST['submit'])) {
     try  {
-        
+
         include 'config.php';
         require 'common.php';
 
         $connection = new PDO($dsn, $username, $password, $options);
 
-        $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt
-                        WHERE SkillLevel = :skill AND r.InstructionID = i.InsID 
+        $sql = "SELECT * FROM Recipe AS r, Instruction AS i, Recipetime AS rt
+                        WHERE SkillLevel = :skill AND r.InstructionID = i.InsID
                         AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
 
         $skill = $_POST['skill'];
@@ -53,20 +53,20 @@ if (isset($_POST['submit'])) {
     } catch(PDOException $error) {
         echo $sql . "<br>" . $error->getMessage();
     }
-        
+
 }
 
 if (isset($_POST['time'])) {
     try  {
-        
+
         include 'config.php';
         require 'common.php';
 
         $connection = new PDO($dsn, $username, $password, $options);
         $val = $_POST['totaltime'];
-        
+
         $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt
-                        WHERE rt.TotalTime <= $val AND r.InstructionID = i.InsID 
+                        WHERE rt.TotalTime <= $val AND r.InstructionID = i.InsID
                         AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
 
         $totaltime = $_POST['totaltime'];
@@ -79,13 +79,13 @@ if (isset($_POST['time'])) {
     } catch(PDOException $error) {
         echo $sql . "<br>" . $error->getMessage();
     }
-        
+
 }
 ?>
 
 <?php require "templates/header.php"; ?>
-        
-<?php  
+
+<?php
 
 if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltime']) ) {
     if ($result && $statement->rowCount() > 0) { ?>
@@ -103,8 +103,8 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltim
                     <th>Instruction</th>
                     <th>Serving Size</th>
                     <th>Author</th>
-                    
-                    
+
+
                 </tr>
             </thead>
             <tbody>
@@ -125,8 +125,8 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltim
     </table>
     <?php } else { ?>
         <blockquote>No results found for <?php echo escape($_POST['skill']); ?>.</blockquote>
-    <?php } 
-} ?> 
+    <?php }
+} ?>
 
 <?php
 if (isset($_POST['Search'])) {
@@ -135,7 +135,7 @@ function myTable($obConn,$sql)
 $rsResult = mysqli_query($obConn, $sql) or die(mysqli_error($obConn));
 if(mysqli_num_rows($rsResult)>0)
 {
-//We start with header. >>>Here we retrieve the field names<<< 
+//We start with header. >>>Here we retrieve the field names<<<
 echo "<table width=\"100%\" border=\"0\" cellspacing=\"1\"
 cellpadding=\"0\"><tr align=\"center\" bgcolor=\"#CCCCCC\">";
 $i = 0;
@@ -200,10 +200,10 @@ myTable($conn,$sql);
 <br><br>
 
 <form method="post">
-</br><h3>View Selected Columns:</h3> 
+</br><h3>View Selected Columns:</h3>
 ReID | SkillLevel | Name | PrepTime | CookTime | TotalTime | Instruction | ServingSize | Username
 <br> <br>
-<label>Enter Column Name with comma Seprated</label> 
+<label>Enter Column Name with comma Seprated</label>
 <input name="cust_cols" type="text" placeholder="Type Here">
 <br>
 <label>Where Skill Level (Easy, Medium, Hard):</label>

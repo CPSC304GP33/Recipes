@@ -326,6 +326,11 @@ INSERT INTO UserFavoritesRecipes VALUES('User2', 1);
 INSERT INTO UserFavoritesRecipes VALUES('User1', 4);
 INSERT INTO UserFavoritesRecipes VALUES('User4', 1);
 INSERT INTO UserFavoritesRecipes VALUES('User2', 2);
+INSERT INTO UserFavoritesRecipes VALUES('User2', 3);
+INSERT INTO UserFavoritesRecipes VALUES('User1', 3);
+INSERT INTO UserFavoritesRecipes VALUES('User4', 3);
+INSERT INTO UserFavoritesRecipes VALUES('User5', 3);
+INSERT INTO UserFavoritesRecipes VALUES('User3', 3);
 
 CREATE TABLE UserSearchesRecipes(
 	Username CHAR(20),
