@@ -23,6 +23,20 @@ INSERT INTO RecipeTime VALUES ('00:03:00', '00:10:00', '00:13:00');
 INSERT INTO RecipeTime VALUES ('03:00:00', '01:00:00', '04:00:00');
 INSERT INTO RecipeTime VALUES ('04:00:00', '00:30:00', '04:30:00');
 
+CREATE TABLE BookUser (
+Username CHAR(20) PRIMARY KEY,
+Password CHAR(20) NOT NULL,
+Email CHAR(20) UNIQUE NOT NULL,
+DietaryRestrictions VARCHAR(100),
+Preferences VARCHAR(100)
+);
+
+INSERT INTO BookUser VALUES('User1', '123abc', 'user1@gmail.com', 'Vegan', 'Low-fat');
+INSERT INTO BookUser VALUES('User2', '234bcd', 'user2@gmail.com', 'Meat-eater', 'Spicy');
+INSERT INTO BookUser VALUES('User3', '345cde', 'user3@gmail.com', ' Lactose Intolerant', null);
+INSERT INTO BookUser VALUES('User4', '456def', 'user4@gmail.com', 'Peanut allergy', 'Low-fat');
+INSERT INTO BookUser VALUES('User5', '567efg', 'user5@gmail.com', 'Apple allergy', 'Low-fat');
+
 CREATE TABLE Recipe (
 ReID INTEGER AUTO_INCREMENT PRIMARY KEY,
 SkillLevel CHAR(20),
@@ -162,20 +176,6 @@ INSERT INTO RatingResult VALUES (3, 1, 1);
 INSERT INTO RatingResult VALUES (4, null, 0);
 INSERT INTO RatingResult VALUES (5, 4, 1);
 
-CREATE TABLE BookUser (
-Username CHAR(20) PRIMARY KEY,
-Password CHAR(20) NOT NULL,
-Email CHAR(20) UNIQUE NOT NULL,
-DietaryRestrictions VARCHAR(100),
-Preferences VARCHAR(100)
-);
-
-INSERT INTO BookUser VALUES('User1', '123abc', 'user1@gmail.com', 'Vegan', 'Low-fat');
-INSERT INTO BookUser VALUES('User2', '234bcd', 'user2@gmail.com', 'Meat-eater', 'Spicy');
-INSERT INTO BookUser VALUES('User3', '345cde', 'user3@gmail.com', ' Lactose Intolerant', null);
-INSERT INTO BookUser VALUES('User4', '456def', 'user4@gmail.com', 'Peanut allergy', 'Low-fat');
-INSERT INTO BookUser VALUES('User5', '567efg', 'user5@gmail.com', 'Apple allergy', 'Low-fat');
-
 
 CREATE TABLE FinalRating (
     Username CHAR(20),
@@ -199,8 +199,6 @@ INSERT INTO FinalRating VALUES ('User2', 2, 2, 3);
 INSERT INTO FinalRating VALUES ('User3', 3, 3, 1);
 INSERT INTO FinalRating VALUES ('User4', 5, 5, 4);
 INSERT INTO FinalRating VALUES ('User5', 1, 1, 2);
-
-
 
 CREATE TABLE Cuisine(
 	Name CHAR(30) PRIMARY KEY
