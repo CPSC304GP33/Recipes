@@ -93,6 +93,7 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltim
                     <th>TotalTime</th>
                     <th>Instruction</th>
                     <th>Serving Size</th>
+                    <th>Author</th>
                     
                     
                 </tr>
@@ -108,6 +109,7 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltim
                 <td><?php echo $row["TotalTime"]; ?></td>
                 <td><?php echo $row["Instructions"]; ?></td>
                 <td><?php echo $row["ServingSize"]; ?></td>
+                <td><?php echo $row["Username"]; ?></td>
             </tr>
         <?php } ?>
         </tbody>
@@ -190,7 +192,7 @@ myTable($conn,$sql);
 
 <form method="post">
 </br><h3>View Selected Columns:</h3> 
-ReID | SkillLevel | Name | PrepTime | CookTime | TotalTime | Instruction | ServingSize
+ReID | SkillLevel | Name | PrepTime | CookTime | TotalTime | Instruction | ServingSize | Username
 <br> <br>
 <label>Enter Column Name with comma Seprated</label> 
 <input name="cust_cols" type="text" placeholder="Type Here">

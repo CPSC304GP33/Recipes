@@ -67,6 +67,7 @@ try {
         <th>TotalTime</th>
         <th>Instruction</th>
         <th>Serving Size</th>
+        <th>Author</th>
     </tr>
   </thead>
   <tbody>
@@ -80,6 +81,7 @@ try {
         <td><?php echo $row["TotalTime"]; ?></td>
         <td><?php echo $row["Instructions"]; ?></td>
         <td><?php echo $row["ServingSize"]; ?></td>
+        <td><?php echo $row["Username"]; ?></td>
     <td><a href="delete.php?ReID=<?php echo escape($row["ReID"]); ?>&InstructionID=<?php echo escape($row["InstructionID"]); ?>">Delete</a></td>
     </tr>
   <?php endforeach; ?>
