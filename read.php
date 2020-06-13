@@ -158,41 +158,38 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltim
 if (isset($_POST['Search'])) {
     function myTable($obConn,$sql)
 {
-$rsResult = mysqli_query($obConn, $sql) or die(mysqli_error($obConn));
-if(mysqli_num_rows($rsResult)>0)
-{
-//We start with header. >>>Here we retrieve the field names<<<
-echo "<table width=\"100%\" border=\"0\" cellspacing=\"1\"
-cellpadding=\"0\"><tr align=\"center\" bgcolor=\"#CCCCCC\">";
-$i = 0;
-while ($i < mysqli_num_fields($rsResult)){
-$field = mysqli_fetch_field_direct($rsResult, $i);
-$fieldName=$field->name;
-echo "<td><strong>$fieldName</strong></td>";
-$i = $i + 1;
-}
-echo "</tr>";
-//>>>Field names retrieved<<<
-//We dump info
-$bolWhite=true;
-while ($row = mysqli_fetch_assoc($rsResult)) {
+    $rsResult = mysqli_query($obConn, $sql) or die(mysqli_error($obConn));
+    if(mysqli_num_rows($rsResult)>0)
+    {
+        
+        echo "<table width=\"100%\" border=\"0\" cellspacing=\"1\"
+        cellpadding=\"0\"><tr align=\"center\" bgcolor=\"#CCCCCC\">";
+        $i = 0;
+        while ($i < mysqli_num_fields($rsResult)){
+            $field = mysqli_fetch_field_direct($rsResult, $i);
+            $fieldName=$field->name;
+            echo "<td><strong>$fieldName</strong></td>";
+            $i = $i + 1;
+        }
+        echo "</tr>";
+        
+        while ($row = mysqli_fetch_assoc($rsResult)) {
 
-foreach($row as $data) {
-echo "<td>$data</td>";
+        foreach($row as $data) {
+            echo "<td>$data</td>";
+        }
+        echo "</tr>";
+        }
+        echo "</table>";
+    }
 }
-echo "</tr>";
-}
-echo "</table>";
-}
-}
-include 'connect.php';
-$cust_cols_array = $_POST['cols'];
-
-$cols = implode(",", $cust_cols_array);
-$conn = OpenCon();
-$sql = "SELECT $cols FROM Recipe AS r, Instruction AS i, Recipetime AS rt
-        WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
-myTable($conn,$sql);
+    include 'connect.php';
+    $cust_cols_array = $_POST['cols'];
+    $cols = implode(",", $cust_cols_array);
+    $conn = OpenCon();
+    $sql = "SELECT $cols FROM Recipe AS r, Instruction AS i, Recipetime AS rt
+            WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
+    myTable($conn,$sql);
 }
 ?>
 
