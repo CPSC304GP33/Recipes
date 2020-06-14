@@ -9,6 +9,30 @@
 require "./config.php";
 require "./common.php";
 if (isset($_POST['submit'])) {
+    try {
+      $connection = new PDO($dsn, $username, $password, $options);
+
+      $new_time = array(
+          "PrepTime"     => $_POST['PrepTime'],
+          "CookTime"       => $_POST['CookTime']
+      );
+      $sql ="SELECT * FROM RecipeTime WHERE PrepTime =:PrepTime AND CookTime =:CookTime";
+      $statement = $connection->prepare($sql);
+      $statement->execute($new_time);
+      $test = $statement->fetch(PDO::FETCH_ASSOC);
+      if(!$test) {
+          $time = strtotime($_POST['CookTime']) + strtotime($_POST['PrepTime']) - strtotime('00:00:00');
+          $totaltime = date('H:i:s', $time);
+          $sql2 = "INSERT INTO RecipeTime (PrepTime, CookTime, TotalTime)
+                  VALUES ('".$_POST['PrepTime']."', '".$_POST['CookTime']."', '$totaltime')";
+          $statement = $connection->prepare($sql2);
+          $statement->execute();
+      } else {
+          echo "value already exist";
+      }
+    } catch(PDOException $error) {
+      echo $sql . "<br>" . $error->getMessage();
+    }
   try { //# of parameters in try must be the same in the $sql, in this case,
         //we have 8 parameters in try and $sql
     $connection = new PDO($dsn, $username, $password, $options);
@@ -26,12 +50,7 @@ if (isset($_POST['submit'])) {
     //             CookTime = :CookTime,
     //             TotalTime = :TotalTime
     //         WHERE PrepTime = (SELECT Recipe.PrepTime FROM Recipe WHERE ReID = :ReID) AND PrepTime = (SELECT Recipe.CookTime FROM Recipe WHERE ReID = :ReID);
-    
-    $time = strtotime($_POST['CookTime']) + strtotime($_POST['PrepTime']) - strtotime('00:00:00');
-    $totaltime = date('H:i:s', $time);
-    $sql = "INSERT INTO RecipeTime (PrepTime, CookTime, TotalTime)
-            VALUES ('".$_POST['PrepTime']."', '".$_POST['CookTime']."', '$totaltime');
-            UPDATE Instruction
+    $sql = "UPDATE Instruction
                 SET Instructions = :Instructions,
                 ServingSize = :ServingSize
             WHERE InsID = (SELECT Recipe.InstructionID FROM Recipe WHERE ReID = :ReID);
