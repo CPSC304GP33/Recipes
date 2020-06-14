@@ -107,13 +107,113 @@ if (isset($_POST['showfavbyall'])) {
 
 }
 
+if (isset($_POST['stime'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT DISTINCT * FROM Recipe AS r, Instruction AS i, Recipetime AS rt, recipehasservingtime AS rst
+                        WHERE rst.SName = :servingtime AND rst.reID = r.reID AND r.InstructionID = i.InsID
+                        AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
+
+        $servingtime = $_POST['servingtime'];
+
+        $statement = $connection->prepare($sql);
+        $statement->bindParam(':servingtime', $servingtime, PDO::PARAM_STR);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+
+}
+
+if (isset($_POST['rtag'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT * FROM Recipe AS r, Instruction AS i, Recipetime AS rt, recipelabelledtag AS rtag
+                        WHERE rtag.TName = :tag AND rtag.ReID = r.reID AND r.InstructionID = i.InsID
+                        AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
+
+        $tag = $_POST['tag'];
+
+        $statement = $connection->prepare($sql);
+        $statement->bindParam(':tag', $tag, PDO::PARAM_STR);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+
+}
+
+if (isset($_POST['rcuisine'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT * FROM Recipe AS r, Instruction AS i, Recipetime AS rt, recipesincuisine AS rc
+                        WHERE rc.CName = :cuisine AND rc.ReID = r.reID AND r.InstructionID = i.InsID
+                        AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
+
+        $cuisine = $_POST['cuisine'];
+
+        $statement = $connection->prepare($sql);
+        $statement->bindParam(':cuisine', $cuisine, PDO::PARAM_STR);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+}
+
+if (isset($_POST['rpop'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT * FROM Recipe AS r, Instruction AS i, Recipetime AS rt, ratingresult AS rs, averating AS ar, finalrating AS fr
+                        WHERE ar.Popularity = :pop AND rs.AverageScore = ar.AverageScore AND fr.RID = rs.RID AND fr.ReID = r.reID AND r.InstructionID = i.InsID
+                        AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
+
+        $pop = $_POST['pop'];
+
+        $statement = $connection->prepare($sql);
+        $statement->bindParam(':pop', $pop, PDO::PARAM_STR);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
+}
+
 ?>
+
+
 
 <?php require "templates/header.php"; ?>
 
 <?php
 
-if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltime']) || isset($_POST['showfavbyall'])) {
+if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) || isset($_POST['showfavbyall']) || isset($_POST['stime'])  || isset($_POST['rtag'])  || isset($_POST['rcuisine']) || isset($_POST['rpop'])) {
     if ($result && $statement->rowCount() > 0) { ?>
         <h2>Results</h2>
 
@@ -150,7 +250,7 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['totaltim
         </tbody>
     </table>
     <?php } else { ?>
-        <blockquote>No results found for <?php echo escape($_POST['skill']); ?>.</blockquote>
+        <blockquote>Sorry there isn't a recipe for your selection at this time yet.</blockquote>
     <?php }
 } ?>
 
@@ -193,12 +293,12 @@ if (isset($_POST['Search'])) {
 }
 ?>
 
-<h2>Find recipe based on Skill Level</h2>
+<h2>Filter Recipes:</h2>
 
 <form method="post">
     <input type="submit" name="showall" value="Show All Recipes"><br>
     <br>
-    <input type="submit" name="showfavbyall" value="Show All Recipes favorited by all users"><br>
+    <input type="submit" name="showfavbyall" value="Show Recipes Favorited by All Users"><br>
     <br>
     <label for="skill">With Skill Level:</label>
     <select name="skill" id="skill">
@@ -209,6 +309,7 @@ if (isset($_POST['Search'])) {
     </select>
     <br><br>
     <input type="submit" name="submit" value="View Results">
+    <br><br>
 
     <label for="totaltime">With Total Time:</label>
     <select name="totaltime" id="totaltime">
@@ -221,9 +322,66 @@ if (isset($_POST['Search'])) {
 
     <br><br>
     <input type="submit" name="time" value="View Results">
-</form>
+    <br>
+    <br>
+    <label for="servingtime">With Serving Time:</label>
+    <select name="servingtime" id="servingtime">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Brunch">Brunch</option>
+        <option value="Tea-time">Tea-time</option>
+        <option value="Dinner">Dinner</option>
+        <option value="Dessert">Dessert</option>
+        
+    </select>
 
-<br><br>
+    <br><br>
+    <input type="submit" name="stime" value="View Results">
+    <br>
+    <br>
+    <label for="tag">With Tag:</label>
+    <select name="tag" id="tag">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="Low-fat">Low-fat</option>
+        <option value="Low-sodium">Low-sodium</option>
+        <option value="Sweet">Sweet</option>
+        <option value="Vegan">Vegan</option>
+        <option value="Vegetarian">Vegetarian</option>
+        
+    </select>
+    <br><br>
+    <input type="submit" name="rtag" value="View Results">
+
+    <br>
+    <br>
+    <label for="cuisine">In Cuisine:</label>
+    <select name="cuisine" id="cuisine">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="French">French</option>
+        <option value="Italian">Italian</option>
+        <option value="Thai">Thai</option>
+        <option value="Western">Western</option>
+        <option value="Indian">Indian</option>
+        
+    </select>
+    <br><br>
+    <input type="submit" name="rcuisine" value="View Results">
+
+    <br>
+    <br>
+    <label for="pop">By Popularity:</label>
+    <select name="pop" id="pop">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="Cold">Cold</option>
+        <option value="Warmer">Warmer</option>
+        <option value="Hot">Hot</option>
+        <option value="Hottest">Hottest</option>
+        
+    </select>
+    <br><br>
+    <input type="submit" name="rpop" value="View Results">
+</form>
 
 <form method="post">
     </br><h3>View Selected Columns:</h3>
@@ -237,11 +395,11 @@ if (isset($_POST['Search'])) {
     <input type="checkbox" name="cols[]" value="ServingSize" />ServingSize<br />
     <input type="checkbox" name="cols[]" value="Username" />Username
 
-    <br><input type="submit" name="Search" value="View" />
+    <br><br><input type="submit" name="Search" value="View" />
 
 </form>
 
 <br>
-<a href="index.php">Back to home</a>
+<a href="index.php">Go Back Homepage</a>
 
 <?php require "templates/footer.php"; ?>
