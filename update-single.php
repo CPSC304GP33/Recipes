@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
     //             CookTime = :CookTime,
     //             TotalTime = :TotalTime
     //         WHERE PrepTime = (SELECT Recipe.PrepTime FROM Recipe WHERE ReID = :ReID) AND PrepTime = (SELECT Recipe.CookTime FROM Recipe WHERE ReID = :ReID);
-
+    
     $time = strtotime($_POST['CookTime']) + strtotime($_POST['PrepTime']) - strtotime('00:00:00');
     $totaltime = date('H:i:s', $time);
     $sql = "INSERT INTO RecipeTime (PrepTime, CookTime, TotalTime)
