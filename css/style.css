@@ -13,3 +13,11 @@ th {
   padding: 5px;
   border-bottom: 1px solid #aaa;
 }
+
+body{
+  background-image: linear-gradient(to right, #ffecd2,  #fcb69f);
+}
+
+html{
+  font-family: sans-serif;
+}
