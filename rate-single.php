@@ -17,11 +17,12 @@ if(!empty($_SESSION['username'])) {
   */
 require "./config.php";
 require "./common.php";
+
 if (isset($_POST['submit'])) {
     try {
       $connection = new PDO($dsn, $username, $password, $options);
       $score = $_POST['score'];
-      $reid = $_POST['ReID'];
+      $reid = $_GET['ReID'];
       $sql_get_rating = "SELECT * FROM FinalRating WHERE ReID = $reid AND UserName = '" . $_SESSION['username'] . "'";
       $rating_exist = $connection->prepare($sql_get_rating);
 
@@ -106,7 +107,7 @@ if (isset($_GET['ReID'])) {
   try {
     $connection = new PDO($dsn, $username, $password, $options);
     $ReID = $_GET['ReID'];
-    $sql = "SELECT r.ReID, r.SkillLevel, r.Name, r.PrepTime, r.CookTime, i.Instructions, i.ServingSize FROM Recipe AS r, Instruction AS i, RecipeTime AS rt WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime AND r.ReID =:ReID";
+    $sql = "SELECT * FROM Recipe AS r, Instruction AS i, RecipeTime AS rt WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime AND r.ReID =:ReID";
     $statement = $connection->prepare($sql);
     $statement->bindValue(':ReID', $ReID);
     $statement->execute();
@@ -127,24 +128,43 @@ if (isset($_GET['ReID'])) {
   Thank you for your rating.
 <?php endif; ?>
 
- <h2>Rate a Recipe</h2>
-
+ <h2>Rate Recipe</h2>
+ <table>
+            <thead>
+                <tr>
+                    <th>ReID</th>
+                    <th>Skill Level</th>
+                    <th>Name</th>
+                    <th>PrepTime</th>
+                    <th>CookTime</th>
+                    <th>TotalTime</th>
+                    <th>Instruction</th>
+                    <th>Serving Size</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><?php echo $user["ReID"]; ?></td>
+                <td><?php echo $user["SkillLevel"]; ?></td>
+                <td><?php echo $user["Name"]; ?></td>
+                <td><?php echo $user["PrepTime"]; ?></td>
+                <td><?php echo $user["CookTime"]; ?></td>
+                <td><?php echo $user["TotalTime"]; ?></td>
+                <td><?php echo $user["Instructions"]; ?></td>
+                <td><?php echo $user["ServingSize"]; ?></td>
+            </tr>
+            </tbody>
+    </table>
 <form method="post" class>
-    <?php foreach ($user as $key => $value) : ?>
-      <label for="<?php echo $key; ?>"><?php echo ucfirst($key); ?></label>
-      <input type="text" name="<?php echo $key; ?>" ReID="<?php echo $key; ?>" value="<?php echo escape($value); ?>" <?php echo ($key = 'readonly'); ?>>
-    <?php endforeach; ?>
-    <label> Very Satisfied = 5 <br>
-            Satisfied = 4<br>
-            Neutral = 3<br>
-            Dissatisfied = 2<br>
-            Very Dissatisfied = 1</label>
+    <br>
+    <label> Rating:</label>
     <select name="score" id="score">
-      <option value=5>5</option>
-      <option value=4>4</option>
-      <option value=3>3</option>
-      <option value=2>2</option>
-      <option value=1>1</option>
+      <option disabled selected value> -- select a rating --</option>
+      <option value=5>Very Satisfied = 5</option>
+      <option value=4>Satisfied = 4</option>
+      <option value=3>Neutral = 3</option>
+      <option value=2>Dissatisfied = 2</option>
+      <option value=1>Very Dissatisfied = 1</option>
     </select>
     <input type="submit" name="submit" value="Submit">
 </form>
