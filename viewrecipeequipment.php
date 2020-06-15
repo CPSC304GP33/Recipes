@@ -61,7 +61,8 @@ if (isset($_GET["ReID"])) {
  ?>
 
 <br><br>
-
-<a href="index.php">Back to home</a>
+<a href="read.php">Back to Filter Page</a>
+<br><br>
+<a href="index.php">Back to Home</a>
 
 <?php require "templates/footer.php"; ?>

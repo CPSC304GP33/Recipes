@@ -65,6 +65,9 @@ try  {
                 <td><?php echo $row["TotalTime"]; ?></td>
                 <td><?php echo $row["Instructions"]; ?></td>
                 <td><?php echo $row["ServingSize"]; ?></td>
+                <td><a href="viewrecipeingredients.php?ReID=<?php echo escape($row["ReID"]); ?>">View Ingredients</a></td>
+                <td><a href="viewrecipeequipment.php?ReID=<?php echo escape($row["ReID"]); ?>">View Equipment</a></td>
+                <td><a href="favoriterecipe.php?ReID=<?php echo escape($row["ReID"]); ?>">Favorite</a></td>
                 <td><a href="rate-single.php?ReID=<?php echo escape($row["ReID"]); ?>">Rate</a></td>
             </tr>
         <?php } ?>
@@ -76,7 +79,9 @@ try  {
  ?>
 
 <br>
-<a href="index.php">Back to home</a>
+<a href="rateRecipes.php">Back to Rate page</a>
+<br>
+<a href="index.php">Back to Home</a>
 
 
 <?php include "templates/footer.php"; ?>

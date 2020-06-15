@@ -95,6 +95,8 @@ if (isset($_POST['submit'])) {
     <input type="submit" name="submit" value="View Results">
   </form>
 
-  <a href="index.php">Back to home</a>
+  <a href="findUser.php">Back to Find User Page</a>
+  <br>
+  <a href="index.php">Back to Home</a>
 
 <?php include "templates/footer.php" ?>
