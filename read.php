@@ -276,6 +276,7 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) 
                 <td><?php echo $row["ServingSize"]; ?></td>
                 <td><?php echo $row["Username"]; ?></td>
                 <td><a href="favoriterecipe.php?ReID=<?php echo escape($row["ReID"]); ?>">Favorite</a></td>
+                <td><a href="rate-single.php?ReID=<?php echo escape($row["ReID"]); ?>">Rate</a></td>
             </tr>
         <?php } ?>
         </tbody>
@@ -431,6 +432,8 @@ if (isset($_POST['Search'])) {
 </form>
 
 <br>
+<a href="read.php">Go Back Filter Page</a>
+<br><br>
 <a href="index.php">Go Back Homepage</a>
 
 <?php require "templates/footer.php"; ?>
