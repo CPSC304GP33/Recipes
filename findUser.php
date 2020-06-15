@@ -74,6 +74,7 @@ if (isset($_POST['submit'])) {
         <td><?php echo $row["TotalTime"]; ?></td>
         <td><?php echo $row["Instructions"]; ?></td>
         <td><?php echo $row["ServingSize"]; ?></td>
+        <td><a href="favoriterecipe.php?ReID=<?php echo escape($row["ReID"]); ?>">Favorite</a></td>
       </tr>
     <?php } ?>
       </tbody>

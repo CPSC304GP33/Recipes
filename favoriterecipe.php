@@ -10,6 +10,8 @@ if(!empty($_SESSION['username'])) {
     echo 'no session';
 }
 
+echo "<br>";
+
 if (isset($_GET["ReID"])) {
     try {
         include 'config.php';
@@ -25,17 +27,15 @@ if (isset($_GET["ReID"])) {
       $statement->bindValue(':username1', $username1);
       $statement->execute();
   
-      $success = "Recipe successfully added to your favorite list.";
+      echo "Recipe successfully added to your favorite list.";
     } catch(PDOException $error) {
       echo "This recipe is already in your favorite list.";
     }
   }
 
-
-
 ?>
 
-<h3>Recipe successfully added to your favorite list.</h3>
+<br><br>
 
 <a href="index.php">Back to home</a>
 
