@@ -4,8 +4,8 @@
   }
 
   if(!empty($_SESSION['username'])) {
-     $username = $_SESSION['username'];
-     echo "Currently logged in as: ". $username . "<br>";
+     $username1 = $_SESSION['username'];
+     echo "Currently logged in as: ". $username1 . "<br>";
   } else{
      echo 'no session';
   }
@@ -213,6 +213,28 @@ if (isset($_POST['rpop'])) {
     }
 }
 
+if (isset($_GET["ReID"])) {
+    try {
+        include 'config.php';
+        require 'common.php';
+
+      $connection = new PDO($dsn, $username, $password, $options);
+  
+      $ReID = $_GET["ReID"];
+  
+      $sql = "INSERT INTO UserFavoritesRecipes VALUES (:username1, $ReID)"; 
+        
+      $statement = $connection->prepare($sql);
+      $statement->bindValue(':username1', $username1);
+      $statement->execute();
+  
+      $success = "Recipe successfully added to your favorite list.";
+    } catch(PDOException $error) {
+      echo "This recipe is already in your favorite list.";
+    }
+  }
+
+
 ?>
 
 
@@ -253,6 +275,7 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) 
                 <td><?php echo $row["Instructions"]; ?></td>
                 <td><?php echo $row["ServingSize"]; ?></td>
                 <td><?php echo $row["Username"]; ?></td>
+                <td><a href="favoriterecipe.php?ReID=<?php echo escape($row["ReID"]); ?>">Favorite</a></td>
             </tr>
         <?php } ?>
         </tbody>
