@@ -20,9 +20,6 @@
 
     <ul>
       <li>
-        <a href="create.php"><strong>Create User Account</strong></a>
-      </li>
-      <li>
         <a href="addRecipe.php"><strong>Add New Recipe</strong></a>
       </li>
       <li>
