@@ -64,11 +64,19 @@ if (isset($_POST['time'])) {
 
         $connection = new PDO($dsn, $username, $password, $options);
         $val = $_POST['totaltime'];
-
+        
+        if ($val == '900000'){
+        $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt
+                        WHERE rt.TotalTime > '010000'  AND r.InstructionID = i.InsID
+                        AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime
+                        ORDER BY rt.TotalTime DESC";
+        }
+        else {
         $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt
                         WHERE rt.TotalTime <= $val AND r.InstructionID = i.InsID
                         AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime
                         ORDER BY rt.TotalTime DESC";
+        }
 
         $totaltime = $_POST['totaltime'];
 
@@ -216,7 +224,7 @@ if (isset($_POST['rpop'])) {
 if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) || isset($_POST['showfavbyall']) || isset($_POST['stime'])  || isset($_POST['rtag'])  || isset($_POST['rcuisine']) || isset($_POST['rpop'])) {
     if ($result && $statement->rowCount() > 0) { ?>
         <h2>Results</h2>
-
+        <?php echo $val; ?>
         <table>
             <thead>
                 <tr>
