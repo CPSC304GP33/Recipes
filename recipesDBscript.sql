@@ -9,6 +9,8 @@ INSERT INTO Instruction VALUES (2,'Mix ingredients in a bowl. Separate into even
 INSERT INTO Instruction VALUES (3,'Add the dry ingredients to the mug and stir. Add the wet ingredients and stir. Put all in the microwave on high until the mixture is cooked which takes about 1 minute 40 seconds for a 1000 watt microwave. Top with ice cream.', 1);
 INSERT INTO Instruction VALUES (4,'Cook sauce. Cook lasagna noodles. Spread layers of noodle, cheese and sauce into the oven-safe pan. Top with more cheese then bake.', 4);
 INSERT INTO Instruction VALUES (5,'Mix ingredients in a bowl. Use a hand mixer to make the merengue. Spread mix on the baking sheet in circles. Bake the macaron shells. Sandwich the merengue in between the shells', 10);
+INSERT INTO Instruction VALUES (6,'Whisk the egg yolks. Stir in sugar water and also evaporated milk. Pour the custard filling into the shells until it is about 80% full. Bake for 15 to 20 minutes.Cool down for several minutes and then take the egg tarts out of the pan. Serve while still warm.', 16);
+INSERT INTO Instruction VALUES (7,'Combine flour, baking soda and salt. Stir in eggs and mashed bananas until well blended. Stir banana mixture into flour mixture; stir just to moisten. Pour batter into prepared loaf pan.Bake in preheated oven until a toothpick inserted into center of the loaf comes out clean.', 30);
 
 CREATE TABLE RecipeTime (
 PrepTime TIME(0),
@@ -22,6 +24,8 @@ INSERT INTO RecipeTime VALUES ('00:20:00', '00:15:00', '00:35:00');
 INSERT INTO RecipeTime VALUES ('00:03:00', '00:10:00', '00:13:00');
 INSERT INTO RecipeTime VALUES ('03:00:00', '01:00:00', '04:00:00');
 INSERT INTO RecipeTime VALUES ('04:00:00', '00:30:00', '04:30:00');
+INSERT INTO RecipeTime VALUES ('01:00:00', '00:20:00', '01:20:00');
+INSERT INTO RecipeTime VALUES ('01:00:00', '02:30:00', '03:30:00');
 
 CREATE TABLE BookUser (
 Username CHAR(20) PRIMARY KEY,
@@ -61,6 +65,8 @@ INSERT INTO Recipe VALUES (2, 'Easy', 'Chocolate Cookie', '00:20:00', '00:15:00'
 INSERT INTO Recipe VALUES (3, 'Medium', 'White Chocolate Brownie', '00:03:00', '00:10:00', 3, 'User2');
 INSERT INTO Recipe VALUES (4, 'Hard', 'Lasagna', '03:00:00', '01:00:00', 4, 'User3');
 INSERT INTO Recipe VALUES (5, 'Hard', 'Macaron', '04:00:00', '00:30:00', 5, 'User4');
+INSERT INTO Recipe VALUES (6, 'Medium', 'Egg Tarts', '01:00:00', '00:20:00', 6, 'User1');
+INSERT INTO Recipe VALUES (7, 'Easy', 'Banana Bread', '01:00:00', '02:30:00', 7, 'User5');
 
 
 CREATE TABLE Ingredient (

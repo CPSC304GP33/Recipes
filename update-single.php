@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
           echo "value already exist";
       }
     } catch(PDOException $error) {
-      echo $sql . "<br>" . $error->getMessage();
+      // echo $sql . "<br>" . $error->getMessage();
     }
   try { //# of parameters in try must be the same in the $sql, in this case,
         //we have 8 parameters in try and $sql
