@@ -275,6 +275,8 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) 
                 <td><?php echo $row["Instructions"]; ?></td>
                 <td><?php echo $row["ServingSize"]; ?></td>
                 <td><?php echo $row["Username"]; ?></td>
+                <td><a href="viewrecipeingredients.php?ReID=<?php echo escape($row["ReID"]); ?>">View Ingredients</a></td>
+                <td><a href="viewrecipeequipment.php?ReID=<?php echo escape($row["ReID"]); ?>">View Equipment</a></td>
                 <td><a href="favoriterecipe.php?ReID=<?php echo escape($row["ReID"]); ?>">Favorite</a></td>
                 <td><a href="rate-single.php?ReID=<?php echo escape($row["ReID"]); ?>">Rate</a></td>
             </tr>
@@ -416,7 +418,7 @@ if (isset($_POST['Search'])) {
 </form>
 
 <form method="post">
-    </br><h3>View Selected Columns:</h3>
+    <h3>View Selected Columns:</h3>
     <input type="checkbox" name="cols[]" value="ReID" />ReID<br />
     <input type="checkbox" name="cols[]" value="SkillLevel" />SkillLevel<br />
     <input type="checkbox" name="cols[]" value="Name" />Name<br />
@@ -431,9 +433,6 @@ if (isset($_POST['Search'])) {
 
 </form>
 
-<br>
-<a href="read.php">Go Back Filter Page</a>
-<br><br>
 <a href="index.php">Go Back Homepage</a>
 
 <?php require "templates/footer.php"; ?>
