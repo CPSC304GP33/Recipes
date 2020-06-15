@@ -224,7 +224,7 @@ if (isset($_POST['rpop'])) {
 if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) || isset($_POST['showfavbyall']) || isset($_POST['stime'])  || isset($_POST['rtag'])  || isset($_POST['rcuisine']) || isset($_POST['rpop'])) {
     if ($result && $statement->rowCount() > 0) { ?>
         <h2>Results</h2>
-        <?php echo $val; ?>
+        
         <table>
             <thead>
                 <tr>
