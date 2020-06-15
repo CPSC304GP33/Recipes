@@ -162,7 +162,7 @@ CREATE TABLE AveRating (
 );
 
 INSERT INTO AveRating VALUES (1, 'Cold');
-INSERT INTO AveRating VALUES (3.5, 'Warmer');
+INSERT INTO AveRating VALUES (2, 'Warmer');
 INSERT INTO AveRating VALUES (3, 'Warmer');
 INSERT INTO AveRating VALUES (4, 'Hot');
 INSERT INTO AveRating VALUES (5, 'Hottest');
@@ -176,7 +176,7 @@ FOREIGN KEY (AverageScore) REFERENCES AveRating(AverageScore)
 	ON UPDATE CASCADE
 );
 
-INSERT INTO RatingResult VALUES (1, 3.5, 2);
+INSERT INTO RatingResult VALUES (1, 3, 2);
 INSERT INTO RatingResult VALUES (2, 3, 1);
 INSERT INTO RatingResult VALUES (3, 1, 1);
 INSERT INTO RatingResult VALUES (4, null, 0);
@@ -184,7 +184,7 @@ INSERT INTO RatingResult VALUES (5, 4, 1);
 
 
 CREATE TABLE FinalRating (
-    Username CHAR(20),
+    UserName CHAR(20),
     ReID INTEGER,
     RID INTEGER NOT NULL,
     Score INTEGER NOT NULL,
