@@ -1,3 +1,4 @@
+
 <?php if(session_id() == '') {
   session_start();
 }
@@ -32,10 +33,13 @@
          <a href="update.php"><strong>Update Recipe</strong></a>
       </li>
       <li>
-        <a href="delete.php"><strong>Delete A Recipe</strong></a> 
+        <a href="delete.php"><strong>Delete A Recipe</strong></a>
       </li>
       <li>
-        <a href="myRecipes.php"><strong>My Recipes</strong></a> 
+        <a href="myRecipes.php"><strong>My Recipes</strong></a>
+      </li>
+      <li>
+        <a href="rateRecipes.php"><strong>Rate Recipes</strong></a>
       </li>
       <p>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
