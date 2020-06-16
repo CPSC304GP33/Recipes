@@ -12,3 +12,5 @@ What's changed from our deliverables:
 - ResetUserPassword table was removed as the functionality strayed from the purpose of our application
 - SendNotifTo table was removed as the functionality strayed from the purpose of our application
 - Bookkeeper manages Book User relation and table was added as we redefined the job of Bookkeepers
+
+Credit to taniarascia.com for the tutorial on creating a simple CRUD database app we based our project on!
