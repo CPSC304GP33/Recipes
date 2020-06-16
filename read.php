@@ -28,7 +28,27 @@ if (isset($_POST['showall'])) {
     } catch(PDOException $error) {
         echo $sql . "<br>" . $error->getMessage();
     }
+}
 
+if (isset($_POST['showallwithicon'])) {
+    try  {
+
+        include 'config.php';
+        require 'common.php';
+
+        $connection = new PDO($dsn, $username, $password, $options);
+
+        $sql = "SELECT * FROM Recipe AS r, Instruction AS i, Recipetime AS rt, recipeicon AS ricon
+                        WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime AND r.ReID = ricon.ReID";
+
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
+    }
 }
 
 if (isset($_POST['submit'])) {
@@ -243,6 +263,52 @@ if (isset($_GET["ReID"])) {
 
 <?php
 
+if (isset($_POST['showallwithicon'])) {
+    if ($result && $statement->rowCount() > 0) { ?>
+        <h2>Results</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ReID</th>
+                    <th>Skill Level</th>
+                    <th>Name</th>
+                    <th>PrepTime</th>
+                    <th>CookTime</th>
+                    <th>TotalTime</th>
+                    <th>Instruction</th>
+                    <th>Serving Size</th>
+                    <th>Author</th>
+                    <th>Image</th>
+
+                </tr>
+            </thead>
+            <tbody>
+        <?php foreach ($result as $row) { ?>
+            <tr>
+                <td><?php echo $row["ReID"]; ?></td>
+                <td><?php echo $row["SkillLevel"]; ?></td>
+                <td><?php echo $row["Name"]; ?></td>
+                <td><?php echo $row["PrepTime"]; ?></td>
+                <td><?php echo $row["CookTime"]; ?></td>
+                <td><?php echo $row["TotalTime"]; ?></td>
+                <td><?php echo $row["Instructions"]; ?></td>
+                <td><?php echo $row["ServingSize"]; ?></td>
+                <td><?php echo $row["Username"]; ?></td>
+                <td><a href="<?php echo escape($row["Link"]); ?>" target="_blank">Link</a></td>
+                <td><a href="favoriterecipe.php?ReID=<?php echo escape($row["ReID"]); ?>">Favorite</a></td>
+                <td><a href="rate-single.php?ReID=<?php echo escape($row["ReID"]); ?>">Rate</a></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php } else { ?>
+        <blockquote>Sorry there isn't a recipe for your selection at this time yet.</blockquote>
+    <?php }
+} ?>
+
+<?php
+
 if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) || isset($_POST['showfavbyall']) || isset($_POST['stime'])  || isset($_POST['rtag'])  || isset($_POST['rcuisine']) || isset($_POST['rpop'])) {
     if ($result && $statement->rowCount() > 0) { ?>
         <h2>Results</h2>
@@ -329,6 +395,8 @@ if (isset($_POST['Search'])) {
 
 <form method="post">
     <input type="submit" name="showall" value="Show All Recipes"><br>
+    <br>
+    <input type="submit" name="showallwithicon" value="Show All Recipes with a photo"><br>
     <br>
     <input type="submit" name="showfavbyall" value="Show Recipes Favorited by All Users"><br>
     <br>
