@@ -11,6 +11,6 @@
   </head>
 
   <body>
-    <h1>Delicous Recipes App</h1>
+    <h1>Delicious Recipes App</h1>
   </body>
 </html>
