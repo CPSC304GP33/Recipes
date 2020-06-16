@@ -22,6 +22,8 @@ h1,h2,a {
 
 body{
   background-image: url(img/foodbackgroundimg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 </style>
