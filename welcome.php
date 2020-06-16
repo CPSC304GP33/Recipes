@@ -28,12 +28,12 @@ body{
 </head>
 
 <body>
-  <h1>Welcome to Delicious Recipe App</h1>
+  <h1>Welcome to Delicious Recipes App</h1>
   <h2>A place to share your passion for cooking</h2>
   <a href= "login.php" class="button">I am a user</a> <br> <br>
   <a href= "keeperlogin.php" class="button">I am a bookkeeper</a>
 
   <?php include "templates/footer.php"; ?>
-  
+
 </body>
 </html>
