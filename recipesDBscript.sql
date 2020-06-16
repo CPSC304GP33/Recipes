@@ -195,11 +195,13 @@ FOREIGN KEY (AverageScore) REFERENCES AveRating(AverageScore)
 	ON UPDATE CASCADE
 );
 
-INSERT INTO RatingResult VALUES (1, 3, 2);
-INSERT INTO RatingResult VALUES (2, 3, 1);
-INSERT INTO RatingResult VALUES (3, 1, 1);
+INSERT INTO RatingResult VALUES (1, 3, 3);
+INSERT INTO RatingResult VALUES (2, 4, 1);
+INSERT INTO RatingResult VALUES (3, 4, 5);
 INSERT INTO RatingResult VALUES (4, null, 0);
-INSERT INTO RatingResult VALUES (5, 4, 1);
+INSERT INTO RatingResult VALUES (5, 2, 1);
+INSERT INTO RatingResult VALUES (6, null, 0);
+INSERT INTO RatingResult VALUES (7, null, 0);
 
 
 CREATE TABLE FinalRating (
@@ -220,10 +222,15 @@ CREATE TABLE FinalRating (
 );
 
 INSERT INTO FinalRating VALUES ('User1', 1, 1, 5);
-INSERT INTO FinalRating VALUES ('User2', 2, 2, 3);
-INSERT INTO FinalRating VALUES ('User3', 3, 3, 1);
-INSERT INTO FinalRating VALUES ('User4', 5, 5, 4);
-INSERT INTO FinalRating VALUES ('User5', 1, 1, 2);
+INSERT INTO FinalRating VALUES ('User2', 1, 1, 3);
+INSERT INTO FinalRating VALUES ('User4', 1, 1, 1);
+INSERT INTO FinalRating VALUES ('User2', 2, 2, 4);
+INSERT INTO FinalRating VALUES ('User2', 3, 3, 2);
+INSERT INTO FinalRating VALUES ('User1', 3, 3, 3);
+INSERT INTO FinalRating VALUES ('User3', 3, 3, 5);
+INSERT INTO FinalRating VALUES ('User4', 3, 3, 4);
+INSERT INTO FinalRating VALUES ('User5', 3, 3, 5);
+INSERT INTO FinalRating VALUES ('User1', 5, 5, 2);
 
 CREATE TABLE Cuisine(
 	Name CHAR(30) PRIMARY KEY
@@ -392,7 +399,7 @@ CREATE TABLE UserFavoritesRecipes(
 
 INSERT INTO UserFavoritesRecipes VALUES('User1', 1);
 INSERT INTO UserFavoritesRecipes VALUES('User2', 1);
-INSERT INTO UserFavoritesRecipes VALUES('User1', 4);
+INSERT INTO UserFavoritesRecipes VALUES('User1', 5);
 INSERT INTO UserFavoritesRecipes VALUES('User4', 1);
 INSERT INTO UserFavoritesRecipes VALUES('User2', 2);
 INSERT INTO UserFavoritesRecipes VALUES('User2', 3);
