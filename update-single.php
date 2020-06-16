@@ -10,6 +10,46 @@ require "./config.php";
 require "./common.php";
 if (isset($_POST['submit'])) {
     try {
+        $connection = new PDO($dsn, $username, $password, $options);
+      $equipment_name = array(
+          "EName"    => $_POST['EName']
+      );
+      $recipe_equipment = array(
+          "EName"    => $_POST['EName'],
+          "ReID"     => $_POST['ReID']
+      );
+
+      $sql ="SELECT * FROM Equipment WHERE Name = :EName";
+      $statement = $connection->prepare($sql);
+      $statement->execute($equipment_name);
+      if(!$statement->fetch(PDO::FETCH_ASSOC)) {
+          $sql2 = "INSERT INTO Equipment (Name)
+                  VALUES ('".$_POST['EName']."');
+                  INSERT INTO RecipeUsesEquipment(EName, ReID)
+                  VALUES ('".$_POST['EName']."', '".$_POST['ReID']."')";
+          $statement = $connection->prepare($sql2);
+          $statement->execute($recipe_equipment);
+          echo "Equipment not exist";
+      } else {
+          echo "Equipment already exist";
+          $sql ="SELECT * FROM RecipeUsesEquipment WHERE EName =:EName AND ReID =:ReID";
+          $statement = $connection->prepare($sql);
+          $statement->execute($recipe_equipment);
+
+          if(!$statement) {
+              $sql2 = "INSERT INTO RecipeUsesEquipment(EName, ReID)
+                      VALUES ('".$_POST['EName']."', '".$_POST['ReID']."')";
+              $statement = $connection->prepare($sql2);
+              $statement->execute($recipe_equipment);
+              echo "RecipeUsesEquipment not exist";
+          } else {
+              echo "RecipeUsesEquipment already exist";
+          }
+      }
+    } catch(PDOException $error) {
+      echo $sql . "<br>" . $error->getMessage();
+    }
+    try {
       $connection = new PDO($dsn, $username, $password, $options);
 
       $new_time = array(
@@ -19,8 +59,8 @@ if (isset($_POST['submit'])) {
       $sql ="SELECT * FROM RecipeTime WHERE PrepTime =:PrepTime AND CookTime =:CookTime";
       $statement = $connection->prepare($sql);
       $statement->execute($new_time);
-      $test = $statement->fetch(PDO::FETCH_ASSOC);
-      if(!$test) {
+      $time_exist = $statement->fetch(PDO::FETCH_ASSOC);
+      if(!$time_exist) {
           $time = strtotime($_POST['CookTime']) + strtotime($_POST['PrepTime']) - strtotime('00:00:00');
           $totaltime = date('H:i:s', $time);
           $sql2 = "INSERT INTO RecipeTime (PrepTime, CookTime, TotalTime)
@@ -28,7 +68,7 @@ if (isset($_POST['submit'])) {
           $statement = $connection->prepare($sql2);
           $statement->execute();
       } else {
-          echo "value already exist";
+          echo "RecipeTime already exist";
       }
     } catch(PDOException $error) {
       // echo $sql . "<br>" . $error->getMessage();
@@ -45,11 +85,6 @@ if (isset($_POST['submit'])) {
       "Instructions"       => $_POST['Instructions'],
       "ServingSize"       => $_POST['ServingSize']
     ];
-    // UPDATE RecipeTime
-    //             SET PrepTime = :PrepTime,
-    //             CookTime = :CookTime,
-    //             TotalTime = :TotalTime
-    //         WHERE PrepTime = (SELECT Recipe.PrepTime FROM Recipe WHERE ReID = :ReID) AND PrepTime = (SELECT Recipe.CookTime FROM Recipe WHERE ReID = :ReID);
     $sql = "UPDATE Instruction
                 SET Instructions = :Instructions,
                 ServingSize = :ServingSize
@@ -60,7 +95,6 @@ if (isset($_POST['submit'])) {
                 PrepTime = :PrepTime,
                 CookTime = :CookTime
             WHERE ReID = :ReID";
-
   $statement = $connection->prepare($sql);
   $statement->execute($user);
   } catch(PDOException $error) {
@@ -71,7 +105,9 @@ if (isset($_GET['ReID'])) {
   try {
     $connection = new PDO($dsn, $username, $password, $options);
     $ReID = $_GET['ReID'];
-    $sql = "SELECT r.ReID, r.SkillLevel, r.Name, r.PrepTime, r.CookTime, i.Instructions, i.ServingSize FROM Recipe AS r, Instruction AS i, RecipeTime AS rt WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime AND r.ReID =:ReID";
+    $sql = "SELECT r.ReID, r.SkillLevel, r.Name, r.PrepTime, r.CookTime, i.Instructions, i.ServingSize
+            FROM Recipe AS r, Instruction AS i, RecipeTime AS rt, RecipeUsesEquipment AS re
+            WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime AND re.ReID = r.ReID AND r.ReID =:ReID";
     $statement = $connection->prepare($sql);
     $statement->bindValue(':ReID', $ReID);
     $statement->execute();
@@ -99,6 +135,8 @@ if (isset($_GET['ReID'])) {
       <label for="<?php echo $key; ?>"><?php echo ucfirst($key); ?></label>
       <input type="text" name="<?php echo $key; ?>" ReID="<?php echo $key; ?>" value="<?php echo escape($value); ?>" <?php echo ($key === 'ReID' ? 'readonly' : null); ?>>
     <?php endforeach; ?>
+    <label for="name">Equipment</label>
+    <input type="text" name="EName" id="EName" value="<?php echo escape($_GET['EName']); ?>">
     <input type="submit" name="submit" value="Submit">
 </form>
 

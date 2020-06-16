@@ -20,9 +20,9 @@ try  {
 
     $connection = new PDO($dsn, $username, $password, $options);
 
-    $sql = "SELECT * FROM Recipe AS r, Instruction AS i, RecipeTime AS rt
+    $sql = "SELECT * FROM Recipe AS r, Instruction AS i, RecipeTime AS rt, RecipeUsesEquipment AS re
                     WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime
-                    AND rt.CookTime = r.CookTime AND r.Username = :username1";
+                    AND rt.CookTime = r.CookTime AND re.ReID = r.ReID AND r.Username = :username1";
 
 
     $statement = $connection->prepare($sql);
@@ -52,6 +52,7 @@ try  {
                     <th>TotalTime</th>
                     <th>Instruction</th>
                     <th>Serving Size</th>
+                    <th>Equipment</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +66,8 @@ try  {
                 <td><?php echo $row["TotalTime"]; ?></td>
                 <td><?php echo $row["Instructions"]; ?></td>
                 <td><?php echo $row["ServingSize"]; ?></td>
-                <td><a href="update-single.php?ReID=<?php echo escape($row["ReID"]); ?>">Edit</a></td>
+                <td><?php echo $row["EName"]; ?></td>
+                <td><a href="update-single.php?ReID=<?php echo escape($row["ReID"]); ?>&EName=<?php echo escape($row["EName"]); ?>">Edit</a></td>
             </tr>
         <?php } ?>
         </tbody>
