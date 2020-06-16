@@ -64,7 +64,7 @@ if (isset($_POST['time'])) {
 
         $connection = new PDO($dsn, $username, $password, $options);
         $val = $_POST['totaltime'];
-        
+
         if ($val == '900000'){
         $sql = "SELECT * FROM recipe AS r, instruction AS i, recipetime AS rt
                         WHERE rt.TotalTime > '010000'  AND r.InstructionID = i.InsID
@@ -102,7 +102,7 @@ if (isset($_POST['showfavbyall'])) {
         $sql = "SELECT * FROM Recipe AS r, Instruction AS i, RecipeTime AS rt
                         WHERE r.InstructionID = i.InsID AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime AND r.ReID = (SELECT r1.ReID FROM Recipe AS r1
                             WHERE NOT EXISTS (
-                            (SELECT Username FROM BookUser) 
+                            (SELECT Username FROM BookUser)
                             EXCEPT (SELECT ur.Username FROM UserFavoritesRecipes As ur WHERE ur.ReID = r1.ReID)))";
 
         $statement = $connection->prepare($sql);
@@ -219,15 +219,15 @@ if (isset($_GET["ReID"])) {
         require 'common.php';
 
       $connection = new PDO($dsn, $username, $password, $options);
-  
+
       $ReID = $_GET["ReID"];
-  
-      $sql = "INSERT INTO UserFavoritesRecipes VALUES (:username1, $ReID)"; 
-        
+
+      $sql = "INSERT INTO UserFavoritesRecipes VALUES (:username1, $ReID)";
+
       $statement = $connection->prepare($sql);
       $statement->bindValue(':username1', $username1);
       $statement->execute();
-  
+
       $success = "Recipe successfully added to your favorite list.";
     } catch(PDOException $error) {
       echo "This recipe is already in your favorite list.";
@@ -246,7 +246,7 @@ if (isset($_GET["ReID"])) {
 if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) || isset($_POST['showfavbyall']) || isset($_POST['stime'])  || isset($_POST['rtag'])  || isset($_POST['rcuisine']) || isset($_POST['rpop'])) {
     if ($result && $statement->rowCount() > 0) { ?>
         <h2>Results</h2>
-        
+
         <table>
             <thead>
                 <tr>
@@ -275,8 +275,6 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) 
                 <td><?php echo $row["Instructions"]; ?></td>
                 <td><?php echo $row["ServingSize"]; ?></td>
                 <td><?php echo $row["Username"]; ?></td>
-                <td><a href="viewrecipeingredients.php?ReID=<?php echo escape($row["ReID"]); ?>">View Ingredients</a></td>
-                <td><a href="viewrecipeequipment.php?ReID=<?php echo escape($row["ReID"]); ?>">View Equipment</a></td>
                 <td><a href="favoriterecipe.php?ReID=<?php echo escape($row["ReID"]); ?>">Favorite</a></td>
                 <td><a href="rate-single.php?ReID=<?php echo escape($row["ReID"]); ?>">Rate</a></td>
             </tr>
@@ -295,7 +293,7 @@ if (isset($_POST['Search'])) {
     $rsResult = mysqli_query($obConn, $sql) or die(mysqli_error($obConn));
     if(mysqli_num_rows($rsResult)>0)
     {
-        
+
         echo "<table width=\"100%\" border=\"0\" cellspacing=\"1\"
         cellpadding=\"0\"><tr align=\"center\" bgcolor=\"#CCCCCC\">";
         $i = 0;
@@ -306,7 +304,7 @@ if (isset($_POST['Search'])) {
             $i = $i + 1;
         }
         echo "</tr>";
-        
+
         while ($row = mysqli_fetch_assoc($rsResult)) {
 
         foreach($row as $data) {
@@ -362,12 +360,13 @@ if (isset($_POST['Search'])) {
     <select name="servingtime" id="servingtime">
         <option disabled selected value> -- select an option -- </option>
         <option value="Breakfast">Breakfast</option>
-        <option value="Lunch">Lunch</option>
         <option value="Brunch">Brunch</option>
-        <option value="Tea-time">Tea-time</option>
+        <option value="Lunch">Lunch</option>
         <option value="Dinner">Dinner</option>
         <option value="Dessert">Dessert</option>
-        
+        <option value="Snack">Snack</option>
+        <option value="Tea-time">Tea-time</option>
+
     </select>
 
     <br><br>
@@ -377,12 +376,22 @@ if (isset($_POST['Search'])) {
     <label for="tag">With Tag:</label>
     <select name="tag" id="tag">
         <option disabled selected value> -- select an option -- </option>
+        <option value="Appetizer">Appetizer</option>
+        <option value="Beverage">Beverage</option>
+        <option value="Gluten-free">Gluten-free</option>
+        <option value="Low-calorie">Low-calorie</option>
         <option value="Low-fat">Low-fat</option>
         <option value="Low-sodium">Low-sodium</option>
+        <option value="Main Dish">Main Dish</option>
+        <option value="Pescatarian">Pescatarian</option>
+        <option value="Salad">Salad</option>
+        <option value="Sauce">Sauce</option>
+        <option value="Side Dish">Side Dish</option>
+        <option value="Soup">Soup</option>
         <option value="Sweet">Sweet</option>
         <option value="Vegan">Vegan</option>
         <option value="Vegetarian">Vegetarian</option>
-        
+
     </select>
     <br><br>
     <input type="submit" name="rtag" value="View Results">
@@ -392,12 +401,22 @@ if (isset($_POST['Search'])) {
     <label for="cuisine">In Cuisine:</label>
     <select name="cuisine" id="cuisine">
         <option disabled selected value> -- select an option -- </option>
+        <option value="British">British</option>
+        <option value="Caribbean">Caribbean</option>
+        <option value="Chinese">Chinese</option>
         <option value="French">French</option>
-        <option value="Italian">Italian</option>
-        <option value="Thai">Thai</option>
-        <option value="Western">Western</option>
+        <option value="Greek">Greek</option>
         <option value="Indian">Indian</option>
-        
+        <option value="Italian">Italian</option>
+        <option value="Japanese">Japanese</option>
+        <option value="Korean">Korean</option>
+        <option value="Mediterranean">Mediterranean</option>
+        <option value="Mexican">Mexican</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Thai">Thai</option>
+        <option value="Vietnamese">Vietnamese</option>
+        <option value="Western">Western</option>
+
     </select>
     <br><br>
     <input type="submit" name="rcuisine" value="View Results">
@@ -408,17 +427,18 @@ if (isset($_POST['Search'])) {
     <select name="pop" id="pop">
         <option disabled selected value> -- select an option -- </option>
         <option value="Cold">Cold</option>
+        <option value="Warm">Warm</option>
         <option value="Warmer">Warmer</option>
         <option value="Hot">Hot</option>
         <option value="Hottest">Hottest</option>
-        
+
     </select>
     <br><br>
     <input type="submit" name="rpop" value="View Results">
 </form>
 
 <form method="post">
-    <h3>View Selected Columns:</h3>
+    </br><h3>View Selected Columns:</h3>
     <input type="checkbox" name="cols[]" value="ReID" />ReID<br />
     <input type="checkbox" name="cols[]" value="SkillLevel" />SkillLevel<br />
     <input type="checkbox" name="cols[]" value="Name" />Name<br />
@@ -433,6 +453,9 @@ if (isset($_POST['Search'])) {
 
 </form>
 
+<br>
+<a href="read.php">Go Back Filter Page</a>
+<br><br>
 <a href="index.php">Go Back Homepage</a>
 
 <?php require "templates/footer.php"; ?>

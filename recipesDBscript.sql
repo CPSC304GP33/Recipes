@@ -11,6 +11,9 @@ INSERT INTO Instruction VALUES (4,'Cook sauce. Cook lasagna noodles. Spread laye
 INSERT INTO Instruction VALUES (5,'Mix ingredients in a bowl. Use a hand mixer to make the merengue. Spread mix on the baking sheet in circles. Bake the macaron shells. Sandwich the merengue in between the shells', 10);
 INSERT INTO Instruction VALUES (6,'Whisk the egg yolks. Stir in sugar water and also evaporated milk. Pour the custard filling into the shells until it is about 80% full. Bake for 15 to 20 minutes.Cool down for several minutes and then take the egg tarts out of the pan. Serve while still warm.', 16);
 INSERT INTO Instruction VALUES (7,'Combine flour, baking soda and salt. Stir in eggs and mashed bananas until well blended. Stir banana mixture into flour mixture; stir just to moisten. Pour batter into prepared loaf pan.Bake in preheated oven until a toothpick inserted into center of the loaf comes out clean.', 30);
+INSERT INTO Instruction VALUES (8, 'Pour the powdered gelatin into a medium-sized mixing bowl. Add boiling water to the gelatin mix, and stir for 2 minutes until it\'s completely dissolved. Stir in the cold water. Refrigerate for at least 4 hours, or until the gelatin is firm and doesn\'t stick to your fingers when touched.', 5);
+INSERT INTO Instruction VALUES (9, '1. Place cold eggs in a single layer in a saucepan. Cover with at least 1 inch (2.5 cm) cold water over top of the eggs. 2. Cover saucepan and bring quickly to a boil over a high heat. Immediately remove pan from heat to stop boiling. Let eggs stand in water for 12 minutes (large eggs). 3. Drain water and immediately run cold water over eggs until cooled.', 3);
+INSERT INTO Instruction VALUES (10, '1. Make the strawberry syrup by boiling blended strawberries and sugar for 1 min. Chill in the fridge until cool.\r\n2. Add the cooled strawberry syrup to a tall glass. Swirl it up and around the glass to make a pattern.\r\n3. Next, add the fresh strawberry pieces to your glass.\r\n4. Finally, gently add in your milk of choice. Swirl it around to get a cool effect. ', 2);
 
 CREATE TABLE RecipeTime (
 PrepTime TIME(0),
@@ -26,6 +29,9 @@ INSERT INTO RecipeTime VALUES ('03:00:00', '01:00:00', '04:00:00');
 INSERT INTO RecipeTime VALUES ('04:00:00', '00:30:00', '04:30:00');
 INSERT INTO RecipeTime VALUES ('01:00:00', '00:20:00', '01:20:00');
 INSERT INTO RecipeTime VALUES ('01:00:00', '02:30:00', '03:30:00');
+INSERT INTO RecipeTime VALUES ('00:10:00', '04:00:00', '04:10:00');
+INSERT INTO RecipeTime VALUES ('00:05:00', '00:05:00', '00:10:00');
+INSERT INTO RecipeTime VALUES ('00:05:00', '00:12:00', '00:17:00');
 
 CREATE TABLE BookUser (
 Username CHAR(20) PRIMARY KEY,
@@ -67,19 +73,22 @@ INSERT INTO Recipe VALUES (4, 'Hard', 'Lasagna', '03:00:00', '01:00:00', 4, 'Use
 INSERT INTO Recipe VALUES (5, 'Hard', 'Macaron', '04:00:00', '00:30:00', 5, 'User4');
 INSERT INTO Recipe VALUES (6, 'Medium', 'Egg Tarts', '01:00:00', '00:20:00', 6, 'User1');
 INSERT INTO Recipe VALUES (7, 'Easy', 'Banana Bread', '01:00:00', '02:30:00', 7, 'User5');
+INSERT INTO Recipe VALUES (8, 'Easy', 'Jello', '00:10:00', '04:00:00',8, 'User1');
+INSERT INTO Recipe VALUES (9, 'Easy', 'Hard Boiled Eggs', '00:05:00', '00:12:00', 9, 'User1');
+INSERT INTO Recipe VALUES (10, 'Medium', 'Strawberry Milk', '00:05:00', '00:05:00', 10, 'User1');
+
 
 
 CREATE TABLE Ingredient (
 Name VARCHAR(100) PRIMARY KEY,
-Unit VARCHAR(50),
-Type VARCHAR(50)
+Unit VARCHAR(50)
 );
 
-INSERT INTO Ingredient VALUES ('Flour', 'Cup', 'Baking');
-INSERT INTO Ingredient VALUES ('Cocoa Powder', 'Cup', 'Baking');
-INSERT INTO Ingredient VALUES ('Egg', null, 'Egg');
-INSERT INTO Ingredient VALUES ('Ground Beef', 'Pound', 'Meat');
-INSERT INTO Ingredient VALUES ('Tomato Paste', 'Ounce', 'Vegetable');
+INSERT INTO Ingredient VALUES ('Flour', 'Cup');
+INSERT INTO Ingredient VALUES ('Cocoa Powder', 'Cup');
+INSERT INTO Ingredient VALUES ('Egg', null);
+INSERT INTO Ingredient VALUES ('Ground Beef', 'Pound');
+INSERT INTO Ingredient VALUES ('Tomato Paste', 'Ounce');
 
 CREATE TABLE Equipment(
 	Name VARCHAR(50) PRIMARY KEY
@@ -135,8 +144,18 @@ CREATE TABLE Tag (
 INSERT INTO Tag VALUES('Vegetarian');
 INSERT INTO Tag VALUES('Low-fat');
 INSERT INTO Tag VALUES('Low-sodium');
+INSERT INTO Tag VALUES('Low-calorie');
+INSERT INTO Tag VALUES('Gluten-free');
 INSERT INTO Tag VALUES('Vegan');
 INSERT INTO Tag VALUES('Sweet');
+INSERT INTO Tag VALUES('Beverage');
+INSERT INTO Tag VALUES('Appetizer');
+INSERT INTO Tag VALUES('Soup');
+INSERT INTO Tag VALUES('Salad');
+INSERT INTO Tag VALUES('Main Dish');
+INSERT INTO Tag VALUES('Side Dish');
+INSERT INTO Tag VALUES('Sauce');
+INSERT INTO Tag VALUES('Pescatarian');
 
 
 CREATE TABLE RecipeLabelledTag (
@@ -162,7 +181,7 @@ CREATE TABLE AveRating (
 );
 
 INSERT INTO AveRating VALUES (1, 'Cold');
-INSERT INTO AveRating VALUES (2, 'Warmer');
+INSERT INTO AveRating VALUES (2, 'Warm');
 INSERT INTO AveRating VALUES (3, 'Warmer');
 INSERT INTO AveRating VALUES (4, 'Hot');
 INSERT INTO AveRating VALUES (5, 'Hottest');
@@ -215,6 +234,9 @@ INSERT INTO Cuisine VALUES ('Indian');
 INSERT INTO Cuisine VALUES ('Western');
 INSERT INTO Cuisine VALUES ('Italian');
 INSERT INTO Cuisine VALUES ('French');
+INSERT INTO Cuisine VALUES ('British'), ('Caribbean'),
+('Chinese'), ('Greek'), ('Japanese'), ('Korean'), ('Mediterranean'), ('Mexican'),
+('Spanish'), ('Vietnamese');
 
 CREATE TABLE RecipesInCuisine(
 	ReID INTEGER,
@@ -228,11 +250,18 @@ CREATE TABLE RecipesInCuisine(
 		ON UPDATE CASCADE
 );
 
-INSERT INTO RecipesInCuisine VALUES (1, 'Western');
+INSERT INTO RecipesInCuisine VALUES (1, 'Italian');
 INSERT INTO RecipesInCuisine VALUES (2, 'Western');
 INSERT INTO RecipesInCuisine VALUES (3, 'Western');
-INSERT INTO RecipesInCuisine VALUES (4, 'Western');
+INSERT INTO RecipesInCuisine VALUES (4, 'Greek');
+INSERT INTO RecipesInCuisine VALUES (4, 'British');
+INSERT INTO RecipesInCuisine VALUES (4, 'Italian');
 INSERT INTO RecipesInCuisine VALUES (5, 'French');
+INSERT INTO RecipesInCuisine VALUES (6, 'Chinese');
+INSERT INTO RecipesInCuisine VALUES (7, 'Western');
+INSERT INTO RecipesInCuisine VALUES (8, 'Western');
+INSERT INTO RecipesInCuisine VALUES (9, 'Western');
+INSERT INTO RecipesInCuisine VALUES (10, 'Korean');
 
 CREATE TABLE ServingTimeOfDay(
 	Name CHAR(20) PRIMARY KEY
@@ -243,6 +272,8 @@ INSERT INTO ServingTimeOfDay VALUES ('Lunch');
 INSERT INTO ServingTimeOfDay VALUES ('Dinner');
 INSERT INTO ServingTimeOfDay VALUES ('Tea-time');
 INSERT INTO ServingTimeOfDay VALUES ('Brunch');
+INSERT INTO ServingTimeOfDay VALUES ('Dessert');
+INSERT INTO ServingTimeOfDay VALUES ('Snack');
 
 CREATE TABLE RecipeHasServingTime(
 	ReID INTEGER,
@@ -256,11 +287,29 @@ CREATE TABLE RecipeHasServingTime(
 		ON UPDATE CASCADE
 );
 
-INSERT INTO RecipeHasServingTime VALUES(1, 'Breakfast');
-INSERT INTO RecipeHasServingTime VALUES(2, 'Breakfast');
-INSERT INTO RecipeHasServingTime VALUES(2, 'Brunch');
+INSERT INTO RecipeHasServingTime VALUES(1, 'Dessert');
+INSERT INTO RecipeHasServingTime VALUES(2, 'Dessert');
+INSERT INTO RecipeHasServingTime VALUES(2, 'Snack');
 INSERT INTO RecipeHasServingTime VALUES(4, 'Dinner');
-INSERT INTO RecipeHasServingTime VALUES(3, 'Tea-time');
+INSERT INTO RecipeHasServingTime VALUES(4, 'Lunch');
+INSERT INTO RecipeHasServingTime VALUES(3, 'Dessert');
+INSERT INTO RecipeHasServingTime VALUES(5, 'Tea-time');
+INSERT INTO RecipeHasServingTime VALUES(5, 'Snack');
+INSERT INTO RecipeHasServingTime VALUES(5, 'Dessert');
+INSERT INTO RecipeHasServingTime VALUES(6, 'Dessert');
+INSERT INTO RecipeHasServingTime VALUES(6, 'Tea-time');
+INSERT INTO RecipeHasServingTime VALUES(6, 'Snack');
+INSERT INTO RecipeHasServingTime VALUES(7, 'Dessert');
+INSERT INTO RecipeHasServingTime VALUES(7, 'Snack');
+INSERT INTO RecipeHasServingTime VALUES(8, 'Snack');
+INSERT INTO RecipeHasServingTime VALUES(8, 'Dessert');
+INSERT INTO RecipeHasServingTime VALUES(9, 'Breakfast');
+INSERT INTO RecipeHasServingTime VALUES(9, 'Brunch');
+INSERT INTO RecipeHasServingTime VALUES(9, 'Snack');
+INSERT INTO RecipeHasServingTime VALUES(10, 'Tea-time');
+INSERT INTO RecipeHasServingTime VALUES(10, 'Breakfast');
+INSERT INTO RecipeHasServingTime VALUES(10, 'Brunch');
+INSERT INTO RecipeHasServingTime VALUES(10, 'Lunch');
 
 
 CREATE TABLE BookKeeper (
@@ -274,8 +323,7 @@ INSERT INTO BookKeeper VALUES('Keeper3', 'cdecde');
 INSERT INTO BookKeeper VALUES('Keeper4', 'defdef');
 INSERT INTO BookKeeper VALUES('Keeper5', 'efgefg');
 
-
-CREATE TABLE ResetUserPassword(
+CREATE TABLE KeeperManageUser(
 	BKUsername CHAR(20),
 	BUUsername CHAR(20),
 	PRIMARY KEY(BKUsername, BUUsername),
@@ -287,29 +335,48 @@ CREATE TABLE ResetUserPassword(
 		ON UPDATE CASCADE
 );
 
-INSERT INTO ResetUserPassword VALUES('Keeper1', 'User5');
-INSERT INTO ResetUserPassword VALUES('Keeper2', 'User1');
-INSERT INTO ResetUserPassword VALUES('Keeper1', 'User2');
-INSERT INTO ResetUserPassword VALUES('Keeper1', 'User1');
-INSERT INTO ResetUserPassword VALUES('Keeper5', 'User3');
+INSERT INTO KeeperManageUser VALUES('Keeper1', 'User5');
+INSERT INTO KeeperManageUser VALUES('Keeper2', 'User1');
+INSERT INTO KeeperManageUser VALUES('Keeper1', 'User2');
+INSERT INTO KeeperManageUser VALUES('Keeper1', 'User1');
+INSERT INTO KeeperManageUser VALUES('Keeper5', 'User3');
 
-CREATE TABLE SendNotifTo(
-	BKUsername CHAR(20),
-	BUUsername CHAR(20),
-	PRIMARY KEY(BKUsername, BUUsername),
-	FOREIGN KEY (BKUsername) REFERENCES BookKeeper(Username)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-	FOREIGN KEY (BUUsername) REFERENCES BookUser(Username)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
 
-INSERT INTO SendNotifTo VALUES('Keeper2', 'User1');
-INSERT INTO SendNotifTo VALUES('Keeper4', 'User2');
-INSERT INTO SendNotifTo VALUES('Keeper1', 'User1');
-INSERT INTO SendNotifTo VALUES('Keeper1', 'User4');
-INSERT INTO SendNotifTo VALUES('Keeper3', 'User2');
+-- CREATE TABLE ResetUserPassword(
+-- 	BKUsername CHAR(20),
+-- 	BUUsername CHAR(20),
+-- 	PRIMARY KEY(BKUsername, BUUsername),
+-- 	FOREIGN KEY (BKUsername) REFERENCES BookKeeper(Username)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE,
+-- 	FOREIGN KEY (BUUsername) REFERENCES BookUser(Username)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE
+-- );
+--
+-- INSERT INTO ResetUserPassword VALUES('Keeper1', 'User5');
+-- INSERT INTO ResetUserPassword VALUES('Keeper2', 'User1');
+-- INSERT INTO ResetUserPassword VALUES('Keeper1', 'User2');
+-- INSERT INTO ResetUserPassword VALUES('Keeper1', 'User1');
+-- INSERT INTO ResetUserPassword VALUES('Keeper5', 'User3');
+
+-- CREATE TABLE SendNotifTo(
+-- 	BKUsername CHAR(20),
+-- 	BUUsername CHAR(20),
+-- 	PRIMARY KEY(BKUsername, BUUsername),
+-- 	FOREIGN KEY (BKUsername) REFERENCES BookKeeper(Username)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE,
+-- 	FOREIGN KEY (BUUsername) REFERENCES BookUser(Username)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE
+-- );
+--
+-- INSERT INTO SendNotifTo VALUES('Keeper2', 'User1');
+-- INSERT INTO SendNotifTo VALUES('Keeper4', 'User2');
+-- INSERT INTO SendNotifTo VALUES('Keeper1', 'User1');
+-- INSERT INTO SendNotifTo VALUES('Keeper1', 'User4');
+-- INSERT INTO SendNotifTo VALUES('Keeper3', 'User2');
 
 CREATE TABLE UserFavoritesRecipes(
 	Username CHAR(20),
@@ -334,35 +401,50 @@ INSERT INTO UserFavoritesRecipes VALUES('User4', 3);
 INSERT INTO UserFavoritesRecipes VALUES('User5', 3);
 INSERT INTO UserFavoritesRecipes VALUES('User3', 3);
 
-CREATE TABLE UserSearchesRecipes(
-	Username CHAR(20),
+CREATE TABLE RecipeIcon(
 	ReID INTEGER,
-	Keyword VARCHAR(100) NOT NULL,
-	PRIMARY KEY(Username, ReID),
-	FOREIGN KEY(Username) REFERENCES BookUser(Username)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
+	Link VARCHAR(100) NOT NULL,
+	PRIMARY KEY (ReID, Link),
 	FOREIGN KEY(ReID) REFERENCES Recipe(ReID)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
 
-INSERT INTO UserSearchesRecipes VALUES('User5', 1, 'cake');
-INSERT INTO UserSearchesRecipes VALUES('User5', 2, 'cookie');
-INSERT INTO UserSearchesRecipes VALUES('User3', 3, 'brownie');
-INSERT INTO UserSearchesRecipes VALUES('User4', 1, 'cake');
-INSERT INTO UserSearchesRecipes VALUES('User1', 1, 'cake');
+INSERT INTO RecipeIcon VALUES (1, 'https://imgur.com/dko7GJ6');
+INSERT INTO RecipeIcon VALUES (2, 'https://imgur.com/vujEWGx');
+INSERT INTO RecipeIcon VALUES (3, 'https://imgur.com/fkvSO1z');
+INSERT INTO RecipeIcon VALUES (4, 'https://imgur.com/uKKxnTa');
+INSERT INTO RecipeIcon VALUES (5, 'https://imgur.com/a/W5X6HCr');
 
-CREATE TABLE CreatedList(
-	Username CHAR(20),
-	Name VARCHAR(40),
-	PRIMARY KEY(Username, Name),
-	FOREIGN KEY(Username) REFERENCES BookUser(Username)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE);
-
-INSERT INTO CreatedList VALUES('User5', 'Favourite Breakfast Dishes');
-INSERT INTO CreatedList  VALUES('User4', 'Easy to Make Desserts');
-INSERT INTO CreatedList  VALUES('User3', 'Quick Lunch Ideas');
-INSERT INTO CreatedList  VALUES('User2', 'Best Christmas Dishes');
-INSERT INTO CreatedList  VALUES('User1', 'Favorite Desserts');
+-- CREATE TABLE UserSearchesRecipes(
+-- 	Username CHAR(20),
+-- 	ReID INTEGER,
+-- 	Keyword VARCHAR(100) NOT NULL,
+-- 	PRIMARY KEY(Username, ReID),
+-- 	FOREIGN KEY(Username) REFERENCES BookUser(Username)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE,
+-- 	FOREIGN KEY(ReID) REFERENCES Recipe(ReID)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE
+-- );
+--
+-- INSERT INTO UserSearchesRecipes VALUES('User5', 1, 'cake');
+-- INSERT INTO UserSearchesRecipes VALUES('User5', 2, 'cookie');
+-- INSERT INTO UserSearchesRecipes VALUES('User3', 3, 'brownie');
+-- INSERT INTO UserSearchesRecipes VALUES('User4', 1, 'cake');
+-- INSERT INTO UserSearchesRecipes VALUES('User1', 1, 'cake');
+--
+-- CREATE TABLE CreatedList(
+-- 	Username CHAR(20),
+-- 	Name VARCHAR(40),
+-- 	PRIMARY KEY(Username, Name),
+-- 	FOREIGN KEY(Username) REFERENCES BookUser(Username)
+-- 		ON DELETE CASCADE
+-- 		ON UPDATE CASCADE);
+--
+-- INSERT INTO CreatedList VALUES('User5', 'Favourite Breakfast Dishes');
+-- INSERT INTO CreatedList  VALUES('User4', 'Easy to Make Desserts');
+-- INSERT INTO CreatedList  VALUES('User3', 'Quick Lunch Ideas');
+-- INSERT INTO CreatedList  VALUES('User2', 'Best Christmas Dishes');
+-- INSERT INTO CreatedList  VALUES('User1', 'Favorite Desserts');
