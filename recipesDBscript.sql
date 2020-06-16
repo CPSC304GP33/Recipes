@@ -89,6 +89,8 @@ INSERT INTO Ingredient VALUES ('Cocoa Powder', 'Cup');
 INSERT INTO Ingredient VALUES ('Egg', null);
 INSERT INTO Ingredient VALUES ('Ground Beef', 'Pound');
 INSERT INTO Ingredient VALUES ('Tomato Paste', 'Ounce');
+INSERT INTO Ingredient VALUES ('Jello Powder', 'Ounce');
+INSERT INTO Ingredient VALUES ('White Sugar', 'Cup');
 
 CREATE TABLE Equipment(
 	Name VARCHAR(50) PRIMARY KEY
@@ -118,6 +120,15 @@ INSERT INTO RecipeContainsIngredient VALUES ('Cocoa Powder', 1, '1/2');
 INSERT INTO RecipeContainsIngredient VALUES ('Egg', 1, '4');
 INSERT INTO RecipeContainsIngredient VALUES ('Ground Beef', 4, '1/2');
 INSERT INTO RecipeContainsIngredient VALUES ('Tomato Paste', 4, '2');
+INSERT INTO RecipeContainsIngredient VALUES ('Flour', 2, '1');
+INSERT INTO RecipeContainsIngredient VALUES ('Flour', 3, '2');
+INSERT INTO RecipeContainsIngredient VALUES ('Flour', 5, '3');
+INSERT INTO RecipeContainsIngredient VALUES ('Egg', 6, '6');
+INSERT INTO RecipeContainsIngredient VALUES ('Egg', 7, '2');
+INSERT INTO RecipeContainsIngredient VALUES ('Jello Powder', 8, '2');
+INSERT INTO RecipeContainsIngredient VALUES ('Egg', 9, '3');
+INSERT INTO RecipeContainsIngredient VALUES ('White Sugar', 10, '1/16');
+
 
 
 CREATE TABLE RecipeUsesEquipment(
@@ -136,6 +147,12 @@ INSERT INTO RecipeUsesEquipment VALUES ('Oven', 2);
 INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 1);
 INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 5);
 INSERT INTO RecipeUsesEquipment VALUES ('Microwave', 3);
+INSERT INTO RecipeUsesEquipment VALUES ('Oven', 4);
+INSERT INTO RecipeUsesEquipment VALUES ('Oven', 6);
+INSERT INTO RecipeUsesEquipment VALUES ('Oven', 7);
+INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 8);
+INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 9);
+INSERT INTO RecipeUsesEquipment VALUES ('Bowl', 10);
 
 CREATE TABLE Tag (
 	TName VARCHAR(40) PRIMARY KEY
