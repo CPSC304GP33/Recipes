@@ -29,9 +29,9 @@ if (isset($_POST['submit'])) {
                   VALUES ('".$_POST['EName']."', '".$_POST['ReID']."')";
           $statement = $connection->prepare($sql2);
           $statement->execute($recipe_equipment);
-          echo "Equipment not exist";
+          // echo "Equipment not exist";
       } else {
-          echo "Equipment already exist";
+          // echo "Equipment already exist";
           $sql ="SELECT * FROM RecipeUsesEquipment WHERE EName =:EName AND ReID =:ReID";
           $statement = $connection->prepare($sql);
           $statement->execute($recipe_equipment);
@@ -41,9 +41,9 @@ if (isset($_POST['submit'])) {
                       VALUES ('".$_POST['EName']."', '".$_POST['ReID']."')";
               $statement = $connection->prepare($sql2);
               $statement->execute($recipe_equipment);
-              echo "RecipeUsesEquipment not exist";
+              // echo "RecipeUsesEquipment not exist";
           } else {
-              echo "RecipeUsesEquipment already exist";
+              // echo "RecipeUsesEquipment already exist";
           }
       }
     } catch(PDOException $error) {
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
           $statement = $connection->prepare($sql2);
           $statement->execute();
       } else {
-          echo "RecipeTime already exist";
+          // echo "RecipeTime already exist";
       }
     } catch(PDOException $error) {
       // echo $sql . "<br>" . $error->getMessage();
