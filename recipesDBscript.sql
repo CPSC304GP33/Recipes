@@ -202,6 +202,9 @@ INSERT INTO RatingResult VALUES (4, null, 0);
 INSERT INTO RatingResult VALUES (5, 2, 1);
 INSERT INTO RatingResult VALUES (6, null, 0);
 INSERT INTO RatingResult VALUES (7, null, 0);
+INSERT INTO RatingResult VALUES (8, null, 0);
+INSERT INTO RatingResult VALUES (9, null, 0);
+INSERT INTO RatingResult VALUES (10, null, 0);
 
 
 CREATE TABLE FinalRating (
