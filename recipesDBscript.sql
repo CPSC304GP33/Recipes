@@ -186,21 +186,19 @@ FOREIGN KEY (ReID) REFERENCES Recipe(ReID)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE);
 
-INSERT INTO Tag VALUES('Vegetarian');
-INSERT INTO Tag VALUES('Low-fat');
-INSERT INTO Tag VALUES('Low-sodium');
-INSERT INTO Tag VALUES('Low-calorie');
-INSERT INTO Tag VALUES('Gluten-free');
-INSERT INTO Tag VALUES('Vegan');
-INSERT INTO Tag VALUES('Sweet');
-INSERT INTO Tag VALUES('Beverage');
-INSERT INTO Tag VALUES('Appetizer');
-INSERT INTO Tag VALUES('Soup');
-INSERT INTO Tag VALUES('Salad');
-INSERT INTO Tag VALUES('Main Dish');
-INSERT INTO Tag VALUES('Side Dish');
-INSERT INTO Tag VALUES('Sauce');
-INSERT INTO Tag VALUES('Pescatarian');
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 1);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 2);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 3);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 5);
+INSERT INTO RecipeLabelledTag VALUES ('Low-fat', 4);
+INSERT INTO RecipeLabelledTag VALUES ('Beverage', 10);
+INSERT INTO RecipeLabelledTag VALUES ('Low-calorie', 9);
+INSERT INTO RecipeLabelledTag VALUES ('Gluten-free', 9);
+INSERT INTO RecipeLabelledTag VALUES ('Low-sodium', 9);
+INSERT INTO RecipeLabelledTag VALUES ('Main Dish', 4);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 8);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 7);
+INSERT INTO RecipeLabelledTag VALUES ('Sweet', 6);
 
 CREATE TABLE AveRating (
 	AverageScore REAL PRIMARY KEY,
