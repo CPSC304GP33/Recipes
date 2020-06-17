@@ -1,5 +1,24 @@
-<?php
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <title>Delicious Recipe App</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+
+
+</body>
+</html>
+
+
+<?php
+require "templates/header.php"; 
 if(session_id() == '') {
     session_start();
   }
@@ -40,3 +59,7 @@ if (isset($_GET["ReID"])) {
 <a href="index.php">Back to home</a>
 
 <?php require "templates/footer.php"; ?>
+
+
+</body>
+</html>
