@@ -217,7 +217,7 @@ if (isset($_POST['rpop'])) {
 
         $connection = new PDO($dsn, $username, $password, $options);
 
-        $sql = "SELECT * FROM Recipe AS r, Instruction AS i, Recipetime AS rt, ratingresult AS rs, averating AS ar, finalrating AS fr
+        $sql = "SELECT DISTINCT r.ReID, r.Name, r.SkillLevel, r.PrepTime, r.CookTime, rt.TotalTime, i.Instructions, i.ServingSize, r.Username FROM Recipe AS r, Instruction AS i, Recipetime AS rt, ratingresult AS rs, averating AS ar, finalrating AS fr
                         WHERE ar.Popularity = :pop AND rs.AverageScore = ar.AverageScore AND fr.RID = rs.RID AND fr.ReID = r.reID AND r.InstructionID = i.InsID
                         AND rt.PrepTime = r.PrepTime AND rt.CookTime = r.CookTime";
 
@@ -362,7 +362,7 @@ if (isset($_POST['Search'])) {
     {
 
         echo "<table width=\"100%\" border=\"0\" cellspacing=\"1\"
-        cellpadding=\"0\"><tr align=\"center\" bgcolor=\"#CCCCCC\">";
+        cellpadding=\"0\"><tr align=\"center\" bgcolor=\"#e79c84\">";
         $i = 0;
         while ($i < mysqli_num_fields($rsResult)){
             $field = mysqli_fetch_field_direct($rsResult, $i);
