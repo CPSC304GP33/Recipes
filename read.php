@@ -351,7 +351,8 @@ if (isset($_POST['submit']) || isset($_POST['showall']) ||isset($_POST['time']) 
         <blockquote>Sorry there isn't a recipe for your selection at this time yet.</blockquote>
     <?php }
 } ?>
-
+<!--The following function myTable is from Tutorial PHP/MySQL by Professor Hazra Imran and I have tweaked the user inputs from text based to check-boxes 
+    -->
 <?php
 if (isset($_POST['Search'])) {
     function myTable($obConn,$sql)
