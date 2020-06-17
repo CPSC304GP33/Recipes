@@ -215,13 +215,7 @@ FOREIGN KEY (AverageScore) REFERENCES AveRating(AverageScore)
 INSERT INTO RatingResult VALUES (1, 3, 3);
 INSERT INTO RatingResult VALUES (2, 4, 1);
 INSERT INTO RatingResult VALUES (3, 4, 5);
-INSERT INTO RatingResult VALUES (4, null, 0);
 INSERT INTO RatingResult VALUES (5, 2, 1);
-INSERT INTO RatingResult VALUES (6, null, 0);
-INSERT INTO RatingResult VALUES (7, null, 0);
-INSERT INTO RatingResult VALUES (8, null, 0);
-INSERT INTO RatingResult VALUES (9, null, 0);
-INSERT INTO RatingResult VALUES (10, null, 0);
 
 
 CREATE TABLE FinalRating (
