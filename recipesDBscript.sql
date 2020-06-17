@@ -186,11 +186,21 @@ FOREIGN KEY (ReID) REFERENCES Recipe(ReID)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE);
 
-INSERT INTO RecipeLabelledTag VALUES ('Sweet', 1);
-INSERT INTO RecipeLabelledTag VALUES ('Sweet', 2);
-INSERT INTO RecipeLabelledTag VALUES ('Sweet', 3);
-INSERT INTO RecipeLabelledTag VALUES ('Sweet', 5);
-INSERT INTO RecipeLabelledTag VALUES ('Low-fat', 4);
+INSERT INTO Tag VALUES('Vegetarian');
+INSERT INTO Tag VALUES('Low-fat');
+INSERT INTO Tag VALUES('Low-sodium');
+INSERT INTO Tag VALUES('Low-calorie');
+INSERT INTO Tag VALUES('Gluten-free');
+INSERT INTO Tag VALUES('Vegan');
+INSERT INTO Tag VALUES('Sweet');
+INSERT INTO Tag VALUES('Beverage');
+INSERT INTO Tag VALUES('Appetizer');
+INSERT INTO Tag VALUES('Soup');
+INSERT INTO Tag VALUES('Salad');
+INSERT INTO Tag VALUES('Main Dish');
+INSERT INTO Tag VALUES('Side Dish');
+INSERT INTO Tag VALUES('Sauce');
+INSERT INTO Tag VALUES('Pescatarian');
 
 CREATE TABLE AveRating (
 	AverageScore REAL PRIMARY KEY,
