@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
           }
       }
     } catch(PDOException $error) {
-      echo $sql . "<br>" . $error->getMessage();
+      // echo $sql . "<br>" . $error->getMessage();
     }
     try {
       $connection = new PDO($dsn, $username, $password, $options);
@@ -114,7 +114,7 @@ if (isset($_GET['ReID'])) {
 
     $user = $statement->fetch(PDO::FETCH_ASSOC);
   } catch(PDOException $error) {
-      echo $sql . "<br>" . $error->getMessage();
+      // echo $sql . "<br>" . $error->getMessage();
   }
 } else {
     echo "Something went wrong!";

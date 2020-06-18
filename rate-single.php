@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
           $connection->prepare($sql_update_ave)->execute();
       }
     } catch(PDOException $error) {
-      echo $sql_get_rating . "<br>" . $error->getMessage();
+      // echo $sql_get_rating . "<br>" . $error->getMessage();
     }
 }
 if (isset($_GET['ReID'])) {
@@ -114,7 +114,7 @@ if (isset($_GET['ReID'])) {
 
     $user = $statement->fetch(PDO::FETCH_ASSOC);
   } catch(PDOException $error) {
-      echo $sql . "<br>" . $error->getMessage();
+      // echo $sql . "<br>" . $error->getMessage();
   }
 } else {
     echo "Something went wrong!";
