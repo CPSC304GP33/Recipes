@@ -195,8 +195,8 @@
     <input type="integer" name="ss" id="ss"><br><br>
     <label for="ins">Instructions</label>
     <textarea rows="10" cols="50" type="text" name="ins" id="ins"></textarea> <br><br>
-    <label for="servingtime">Add Serving Time</label>
-    <select name="servingtime" id="servingtime">
+    <label for="stime">Add Serving Time</label>
+    <select name="stime" id="stime">
         <option disabled selected value> -- select an option -- </option>
         <option value="Breakfast">Breakfast</option>
         <option value="Brunch">Brunch</option>
