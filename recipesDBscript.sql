@@ -224,6 +224,7 @@ INSERT INTO RatingResult VALUES (1, 3, 3);
 INSERT INTO RatingResult VALUES (2, 4, 1);
 INSERT INTO RatingResult VALUES (3, 4, 5);
 INSERT INTO RatingResult VALUES (5, 2, 1);
+INSERT INTO RatingResult VALUES (6, 5, 1);
 
 
 CREATE TABLE FinalRating (
@@ -253,6 +254,7 @@ INSERT INTO FinalRating VALUES ('User3', 3, 3, 5);
 INSERT INTO FinalRating VALUES ('User4', 3, 3, 4);
 INSERT INTO FinalRating VALUES ('User5', 3, 3, 5);
 INSERT INTO FinalRating VALUES ('User1', 5, 5, 2);
+INSERT INTO FinalRating VALUES ('User3', 4, 6, 5);
 
 CREATE TABLE Cuisine(
 	Name CHAR(30) PRIMARY KEY
