@@ -523,7 +523,7 @@ if (isset($_POST['Search'])) {
 </form>
 
 <br>
-<a href="read.php">Go Back Filter Page</a>
+<a href="read.php">Reset</a>
 <br><br>
 <a href="index.php">Go Back Homepage</a>
 

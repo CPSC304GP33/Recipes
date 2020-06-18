@@ -79,9 +79,8 @@ try  {
  ?>
 
 <br>
-<a href="rateRecipes.php">Back to Rate page</a>
-<br>
+<a href="rateRecipes.php">Reset</a>
+<br><br>
 <a href="index.php">Back to Home</a>
-
 
 <?php include "templates/footer.php"; ?>

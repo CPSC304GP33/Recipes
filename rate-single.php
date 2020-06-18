@@ -168,7 +168,9 @@ if (isset($_GET['ReID'])) {
     </select>
     <input type="submit" name="submit" value="Submit">
 </form>
-
+<br>
+<a href="rateRecipes.php">Back to Rate page</a>
+<br><br>
 <a href="index.php">Back to home</a>
 
 <?php require "templates/footer.php"; ?>
