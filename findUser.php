@@ -52,11 +52,6 @@ if (isset($_POST['submit'])) {
   <th>ReID</th>
   <th>Skill Level</th>
   <th>Name</th>
-  <th>PrepTime</th>
-  <th>CookTime</th>
-  <th>TotalTime</th>
-  <th>Instruction</th>
-  <th>Serving Size</th>
 </tr>
     </thead>
     <tbody>
@@ -69,15 +64,7 @@ if (isset($_POST['submit'])) {
         <td><?php echo $row["ReID"]; ?></td>
         <td><?php echo $row["SkillLevel"]; ?></td>
         <td><?php echo $row["Name"]; ?></td>
-        <td><?php echo $row["PrepTime"]; ?></td>
-        <td><?php echo $row["CookTime"]; ?></td>
-        <td><?php echo $row["TotalTime"]; ?></td>
-        <td><?php echo $row["Instructions"]; ?></td>
-        <td><?php echo $row["ServingSize"]; ?></td>
-        <td><a href="viewrecipeingredients.php?ReID=<?php echo escape($row["ReID"]); ?>">View Ingredients</a></td>
-        <td><a href="viewrecipeequipment.php?ReID=<?php echo escape($row["ReID"]); ?>">View Equipment</a></td>
-        <td><a href="favoriterecipe.php?ReID=<?php echo escape($row["ReID"]); ?>">Favorite</a></td>
-        <td><a href="rate-single.php?ReID=<?php echo escape($row["ReID"]); ?>">Rate</a></td>
+        <td><a href="viewrecipe.php?ReID=<?php echo escape($row["ReID"]); ?>" target=_blank>View Recipe</a></td>
       </tr>
     <?php } ?>
       </tbody>
